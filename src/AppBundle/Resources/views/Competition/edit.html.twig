@@ -1,0 +1,58 @@
+{% extends "AppBundle::layout.html.twig" %}
+{% block body%}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-icon" data-background-color="rose">
+                        <i class="material-icons">military_tech</i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">Edit :  {{form.vars.value.name}}</h4>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        {{form_start(form)}}
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="fileinput fileinput-new text-center" style="    width: 100%;" data-provides="fileinput">
+                                    <div class="fileinput-new thumbnail" style="    ">
+                                        <img  id="img-preview" src="{{asset(form.vars.value.media.link)|imagine_filter('competition_thumb')}}"  width="100%">
+                                        <a href="#" class="btn btn-success btn-round btn-select"><i class="material-icons">image</i> Logo </a>
+                                    </div>
+                                    {{form_widget(form.file,{"attr":{"class":"file-hidden input-file img-selector","style":"    display: none;"}})}}
+                                    <span class="validate-input">{{form_errors(form.file)}}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group label-floating is-empty">
+                                    <label class="control-label">Name</label>
+                                    {{form_widget(form.name,{"attr":{"class":"form-control"}})}}
+                                    <span class="validate-input">{{form_errors(form.name)}}</span>
+                                </div>
+                                <div class="form-group label-floating is-empty">
+                                    <label class="control-label">Abbreviation</label>
+                                    {{form_widget(form.abbreviation,{"attr":{"class":"form-control"}})}}
+                                    <span class="validate-input">{{form_errors(form.abbreviation)}}</span>
+                                </div>
+                                <div class="form-group label-floating is-empty">
+                                    <label class="control-label">Season</label>
+                                    {{form_widget(form.season,{"attr":{"class":"form-control"}})}}
+                                    <span class="validate-input">{{form_errors(form.season)}}</span>
+                                </div>
+                                <div class="">
+                                    <label>
+                                        {{form_widget(form.enabled)}}  Enabled
+                                    </label>
+                                </div>
+                                <span class="pull-right"><a href="{{path("app_competition_index")}}" class="btn btn-fill btn-yellow"><i class="material-icons">arrow_back</i> Cancel</a>{{form_widget(form.save,{attr:{"class":"btn btn-fill btn-success"}})}}</span>
+                            </div>
+                        </div>
+                        {{form_end(form)}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock%}

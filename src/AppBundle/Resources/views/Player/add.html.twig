@@ -1,0 +1,231 @@
+{% extends "AppBundle::layout.html.twig" %}
+{% block body%}
+    <div class="container-fluid">
+        <div class="row">
+            {{form_start(form)}}
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header card-header-icon" data-background-color="rose">
+                        <i class="material-icons">recent_actors</i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">Player informations</h4>
+                        <br>
+                        <center>
+                        <div class="fileinput fileinput-new text-center" style="width:250px !important;" data-provides="fileinput">
+                            <div class="fileinput-new thumbnail" >
+                                <a href="#" class="btn btn-success btn-sm btn-round btn-select"><i class="material-icons">image</i></a>
+                                <img  id="img-preview" src="{{asset("img/image_placeholder.jpg")|imagine_filter('player_thumb')}}"  style="width:100%">
+                            </div>
+                            {{form_widget(form.file,{"attr":{"class":"file-hidden input-file img-selector","style":"    display: none;"}})}}
+                            <span class="validate-input">{{form_errors(form.file)}}</span>
+                        </div>
+                        </center>
+                        <div class="form-group label-floating is-empty">
+                            <label class="control-label">First Name</label>
+                            {{form_widget(form.fname,{"attr":{"class":"form-control"}})}}
+                            <span class="validate-input">{{form_errors(form.fname)}}</span>
+                        </div>
+                        <div class="form-group label-floating is-empty">
+                            <label class="control-label">Last Name</label>
+                            {{form_widget(form.lname,{"attr":{"class":"form-control"}})}}
+                            <span class="validate-input">{{form_errors(form.lname)}}</span>
+                        </div>
+                        <div class="form-group label-floating is-empty">
+                            <label class="control-label">Country</label>
+                            {{form_widget(form.country,{"attr":{"class":"form-control"}})}}
+                            <span class="validate-input">{{form_errors(form.country)}}</span>
+                        </div>
+                        <div class="form-group label-floating is-empty">
+                            <label class="control-label">Number</label>
+                            {{form_widget(form.number,{"attr":{"class":"form-control"}})}}
+                            <span class="validate-input">{{form_errors(form.number)}}</span>
+                        </div>
+                        <div class="form-group label-floating is-empty">
+                            <label class="control-label">Born</label>
+                            {{form_widget(form.born,{"attr":{"class":"form-control"}})}}
+                            <span class="validate-input">{{form_errors(form.born)}}</span>
+                        </div>
+                        <div class="form-group label-floating is-empty">
+                            <label class="control-label">Height</label>
+                            {{form_widget(form.height,{"attr":{"class":"form-control"}})}}
+                            <span class="validate-input">{{form_errors(form.height)}}</span>
+                        </div>
+                        <div class="form-group label-floating is-empty">
+                            <label class="control-label">Weight</label>
+                            {{form_widget(form.weight,{"attr":{"class":"form-control"}})}}
+                            <span class="validate-input">{{form_errors(form.weight)}}</span>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header card-header-icon" data-background-color="rose">
+                        <i class="material-icons">insights</i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">Player Statistics</h4>
+                        <br>
+                       
+                        <ul class="statistics" data-prototype="{{ form_widget(form.statistics.vars.prototype)|e('html_attr') }}">
+                            {# iterate over each existing statistic and render its only field: name #}
+                            {% for statistic in form.statistics %}
+                                <li>{{ form_row(statistic.statistic) }} {{ form_row(statistic.value) }}</li>
+                            {% endfor %}
+                        </ul>
+                        <br>
+                         {{form_widget(form.statistics)}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header card-header-icon" data-background-color="rose">
+                        <i class="material-icons">public</i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">Player Social Network</h4>
+                        <br>
+                       
+                        <ul class="socials" data-prototype="{{ form_widget(form.socials.vars.prototype)|e('html_attr') }}">
+                            {# iterate over each existing social and render its only field: name #}
+                            {% for social in form.socials %}
+                                <li>{{ form_row(social.social) }} {{ form_row(social.value) }}</li>
+                            {% endfor %}
+                        </ul>
+                        <br>
+                         {{form_widget(form.socials)}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <span class="pull-right"><a href="{{path("app_team_players",{id:team.id})}}" class="btn btn-fill btn-yellow"><i class="material-icons">arrow_back</i> Cancel</a>{{form_widget(form.save,{attr:{"class":"btn btn-fill btn-success"}})}}</span>
+                </div>
+            </div>
+            {{form_end(form)}}
+        </div>
+    </div>
+    <script type="text/javascript">
+    var $collectionHolder;
+    // setup an "add a statistic" link
+    var $addTagLink = $('<a href="#" class="btn btn-block btn-info">ADD STATISTIC</a>');
+    var $newLinkLi = $('<li></li>').append($addTagLink);
+    jQuery(document).ready(function() {
+    // Get the ul that holds the collection of statistics
+    $collectionHolder = $('ul.statistics');
+    // add the "add a statistic" anchor and li to the statistics ul
+    $collectionHolder.append($newLinkLi);
+    // count the current form inputs we have (e.g. 2), use that as the new
+    // index when inserting a new item (e.g. 2)
+    $collectionHolder.data('index', $collectionHolder.find(':input').length);
+    $addTagLink.on('click', function(e) {
+    // prevent the link from creating a "#" on the URL
+    e.preventDefault();
+    // add a new statistic form (see next code block)
+    addTagForm($collectionHolder, $newLinkLi);
+    });
+    });
+    function addTagForm($collectionHolder, $newLinkLi) {
+    // Get the data-prototype explained earlier
+    var prototype = $collectionHolder.data('prototype');
+    // get the new index
+    var index = $collectionHolder.data('index');
+    var newForm = prototype;
+    // You need this only if you didn't set 'label' => false in your statistics field in TaskType
+    // Replace '__name__label__' in the prototype's HTML to
+    // instead be a number based on how many items we have
+    // newForm = newForm.replace(/__name__label__/g, index);
+    // Replace '__name__' in the prototype's HTML to
+    // instead be a number based on how many items we have
+    newForm = newForm.replace(/__name__/g, index);
+    // increase the index with one for the next item
+    $collectionHolder.data('index', index + 1);
+    // Display the form in the page in an li, before the "Add a statistic" link li
+    var $newFormLi = $('<li></li>').append(newForm);
+    $newLinkLi.before($newFormLi);
+    addTagFormDeleteLink($newFormLi);
+    }
+    jQuery(document).ready(function() {
+    // Get the ul that holds the collection of statistics
+    $collectionHolder = $('ul.statistics');
+    // add a delete link to all of the existing statistic form li elements
+    $collectionHolder.find('li').each(function() {
+    addTagFormDeleteLink($(this));
+    });
+    // ... the rest of the block from above
+    });
+    function addTagFormDeleteLink($statisticFormLi) {
+    var $removeFormA = $('<a href="#" class="delete-item btn-danger"><i class="material-icons">delete</i></a>');
+    $statisticFormLi.append($removeFormA);
+    $removeFormA.on('click', function(e) {
+    // prevent the link from creating a "#" on the URL
+    e.preventDefault();
+    // remove the li for the statistic form
+    $statisticFormLi.remove();
+    });
+    }
+    </script>
+    <script type="text/javascript">
+    var $collectionHolderSocial;
+    // setup an "add a social" link
+    var $addTagLinkSocial = $('<a href="#" class="btn btn-block btn-info">ADD SOCIAL MEDIA</a>');
+    var $newLinkLiSocial = $('<li></li>').append($addTagLinkSocial);
+    jQuery(document).ready(function() {
+    // Get the ul that holds the collection of socials
+    $collectionHolderSocial = $('ul.socials');
+    // add the "add a social" anchor and li to the socials ul
+    $collectionHolderSocial.append($newLinkLiSocial);
+    // count the current form inputs we have (e.g. 2), use that as the new
+    // index when inserting a new item (e.g. 2)
+    $collectionHolderSocial.data('index', $collectionHolderSocial.find(':input').length);
+    $addTagLinkSocial.on('click', function(e) {
+    // prevent the link from creating a "#" on the URL
+    e.preventDefault();
+    // add a new social form (see next code block)
+    addTagFormSocial($collectionHolderSocial, $newLinkLiSocial);
+    });
+    });
+    function addTagFormSocial($collectionHolderSocial, $newLinkLiSocial) {
+    // Get the data-prototype explained earlier
+    var prototype = $collectionHolderSocial.data('prototype');
+    // get the new index
+    var indexSocial = $collectionHolderSocial.data('index');
+    var newFormSocial = prototype;
+    // You need this only if you didn't set 'label' => false in your socials field in TaskType
+    // Replace '__name__label__' in the prototype's HTML to
+    // instead be a number based on how many items we have
+    // newFormSocial = newFormSocial.replace(/__name__label__/g, index);
+    // Replace '__name__' in the prototype's HTML to
+    // instead be a number based on how many items we have
+    newFormSocial = newFormSocial.replace(/__name__/g, indexSocial);
+    // increase the index with one for the next item
+    $collectionHolderSocial.data('index', indexSocial + 1);
+    // Display the form in the page in an li, before the "Add a social" link li
+    var $newFormSocialLi = $('<li></li>').append(newFormSocial);
+    $newLinkLiSocial.before($newFormSocialLi);
+    addTagFormSocialDeleteLink($newFormSocialLi);
+    }
+    jQuery(document).ready(function() {
+    // Get the ul that holds the collection of socials
+    $collectionHolderSocial = $('ul.socials');
+    // add a delete link to all of the existing social form li elements
+    $collectionHolderSocial.find('li').each(function() {
+    addTagFormSocialDeleteLink($(this));
+    });
+    // ... the rest of the block from above
+    });
+    function addTagFormSocialDeleteLink($socialFormLi) {
+    var $removeFormASocial = $('<a href="#" class="delete-item btn-danger"><i class="material-icons">delete</i></a>');
+    $socialFormLi.append($removeFormASocial);
+    $removeFormASocial.on('click', function(e) {
+    // prevent the link from creating a "#" on the URL
+    e.preventDefault();
+    // remove the li for the social form
+    $socialFormLi.remove();
+    });
+    }
+    </script>
+{% endblock%}

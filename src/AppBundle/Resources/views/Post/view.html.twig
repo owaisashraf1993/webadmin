@@ -1,0 +1,125 @@
+{% extends "AppBundle::layout.html.twig" %}
+{% block body%}
+    <div class="container-fluid guide-view">
+        <div class="row">
+            <div class="col-sm-offset-2 col-md-8">
+                <div class="card">
+                    <div class="card-header card-header-icon" data-background-color="rose">
+                        <i class="material-icons">live_help</i>
+                    </div>
+                    <br>
+                    <h4 class="card-title">{{post.title}}</h4>
+                    {% if post.media != null %}
+                        <img src="{{asset(post.media.link)}}" class="fileinput-preview  " >
+                    {% endif %}
+                    <br><br>
+                    {% if post.localvideo != null %}
+                        <video autobuffer autoloop loop controls width="100%">
+                            <source id="video_here" src="{{asset(post.localvideo.link)}}"/>
+                            <source id="video_here" src="{{asset(post.localvideo.link)}}"/>
+                            <object type="video/ogg" data="{{asset(post.localvideo.link)}}">
+                            <param name="src" value="{{asset(post.localvideo.link)}}"/>
+                                <param name="autoplay" value="false"/>
+                                    <param name="autoStart" value="0"/>
+                                        <p><a href="{{asset(post.localvideo.link)}}">Download this video file.</a></p>
+                                        </object>
+                                    </video>
+                                {% endif %}
+                                {% if post.video != null %}
+                                    <style>.embed-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; } .embed-container iframe, .embed-container object, .embed-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }</style><div class='embed-container'><iframe src='https://www.youtube.com/embed/{{post.youtube}}' frameborder='0' allowfullscreen></iframe></div>                        <div class="form-group label-floating is-empty">
+                                {% endif %}
+                                <div class="card-content">
+                                    <div >
+                                        {{post.content|raw}}
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-6">{% if post.enabled %}
+                                            <i class="material-icons" style="color:green;float:left">check_circle</i> <span class="check-label">Enabled</span>
+                                        {% else %}
+                                            <i class="material-icons" style="color:red;float:left">cancel</i> <span class="check-label">Disabled</span>
+                                        {% endif %}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">{% if post.comment %}
+                                            <i class="material-icons" style="color:green;float:left">check_circle</i> <span class="check-label">Comment Enabled</span>
+                                        {% else %}
+                                            <i class="material-icons" style="color:red;float:left">cancel</i> <span class="check-label">Comment Disabled</span>
+                                        {% endif %}</div>
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <i class="material-icons" style="color:green;float:left">alarm</i> <span class="check-label">{{post.created|ago}}</span>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <span class="label label-rose col-md-3" style="font-size:11pt;padding:10px;background:#FF5722"> <b>{{post.sharesnumber}} shares</b></span> 
+                                    <span class="label label-rose col-md-4 col-sm-offset-1" style="font-size:11pt;padding:10px;background:#FF5722"> <b>{{post.comments|length}} comments</b></span>
+                                    <span class="label label-rose col-md-3 col-sm-offset-1" style="font-size:11pt;padding:10px;background:#FF5722"> <b>{{post.viewsnumber}} views</b></span>
+                                    <br>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-offset-2 col-md-8">
+                        {% for comment in post.comments %}
+                            <div>
+                                <ul class="timeline timeline-simple">
+                                    <li class="timeline-inverted">
+                                        <div class="timeline-badge danger">
+                                        {% if comment.user.media != null %}
+                                            {% if comment.user.media.type =="link" %}
+                                                <img class="avatar-char palette-Red-400 bg"  style="border-radius: 100px;    border: 0.5px solid #ccc;" src="{{comment.user.media.url}}" alt="">
+                                            {% else %}
+                                                <img class="avatar-char palette-Red-400 bg"  style="border-radius: 100px;    border: 0.5px solid #ccc;" src="{{asset(comment.user.media.link)|imagine_filter('actor_thumb')}}" alt="">
+                                            {% endif %}
+                                        {% else %}
+                                            <img class="avatar-char palette-Red-400 bg"  style="border-radius: 100px;    border: 0.5px solid #ccc;" src="{{asset("img/avatar.jpg")|imagine_filter('actor_thumb')}}" alt="">
+                                        {% endif %}
+                                        </div>
+                                        <div class="timeline-panel">
+                                            <div class="timeline-heading">
+                                                <a href="{{path("user_user_edit",{id:comment.user.id})}}" title="">
+                                                    <span class="label label-danger">{{comment.user.name}}</span>
+                                                </a>
+                                                <span class="pull-right" >
+                                                    <a href="{{path("app_comment_delete",{id:comment.id,"post":"true"})}}"  rel="tooltip" data-placement="bottom" title="" data-original-title="Delete">
+                                                        <i class="material-icons" style="color:red">delete</i>
+                                                    </a>
+                                                    {% if comment.enabled %}
+                                                        <a href="{{path("app_comment_hide",{id:comment.id})}}"  rel="tooltip" data-placement="bottom" title="" data-original-title="Hide">
+                                                            <i class="material-icons">visibility_off</i>
+                                                        </a>
+                                                    {% else %}
+                                                        <a href="{{path("app_comment_hide",{id:comment.id})}}"   rel="tooltip" data-placement="bottom" title="" data-original-title="Show">
+                                                            <i class="material-icons">remove_red_eye</i>
+                                                        </a>
+                                                    {% endif %}
+                                                </span>
+                                            </div>
+                                            <div class="timeline-body">
+                                                <p>{{comment.contentclear}}</p>
+                                            </div>
+                                            <small class="pull-right label label-rose">
+                                            <span>{{comment.created|ago}}</span>
+                                            </small>
+                                        </div>
+                                    </li>
+                                    
+                                </ul>
+                            </div>
+                        {% else %}
+                            <div class="card" >
+                                <div class="card-content">
+                                    <center><img src="{{asset("img/bg_empty.png")}}"  style="width: 100% !important;" ></center>
+                                    <br>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endblock%}

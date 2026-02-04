@@ -1,0 +1,161 @@
+{% extends "AppBundle::layout.html.twig" %}
+{% block body%}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-offset-1  col-md-10">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card card-stats card-initial" style="margin: 15px 0;">
+							<div class="card-header " data-background-color="green">
+								<i class="material-icons">sports_volleyball</i>
+							</div>
+							<div class="card-content trailer-body">
+								<h4 class="title">New Match</h4>
+							</div>
+							<div class="tab-moivie">
+								<a href="#" class="btn btn-tab-movie-active"><i class="material-icons">add</i> Add</a>
+								<a href="#" class="btn btn-tab-movie btn-disabled"><i class="material-icons">shutter_speed</i> MATCH FACTS</a>
+								<a href="#" class="btn btn-tab-movie btn-disabled"><i class="material-icons">donut_large</i> STATISTCS</a>
+								<a href="#" class="btn btn-tab-movie btn-disabled"><i class="material-icons">notifications</i> Result notificat</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				{{form_start(form)}}
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-content">
+								<div class="row">
+									<div class="col-md-3">
+										<div class="form-group label-floating is-empty">
+											<img src="{{asset("img/club.png")|imagine_filter('club_thumb')}}" id="homeclub_image">
+											<label class="control-label">Home club</label>
+											{{form_widget(form.homeclub,{"attr":{"class":"form-control","onchange":"selectHomeClub(this)"}})}}
+											<span class="validate-input">{{form_errors(form.homeclub)}}</span>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<center>Match Result</center>
+										<br>
+										<div class="col-md-6">
+											<div class="form-group label-floating is-empty">
+												{{form_widget(form.homeresult,{"attr":{"class":"form-control result-control"}})}}
+												<span class="validate-input">{{form_errors(form.homeresult)}}</span>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group label-floating is-empty">
+												{{form_widget(form.awayresult,{"attr":{"class":"form-control result-control"}})}}
+												<span class="validate-input">{{form_errors(form.awayresult)}}</span>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group label-floating is-empty">
+												{{form_widget(form.homesubresult,{"attr":{"class":"form-control","style":"    text-align: center;"}})}}
+												<span class="validate-input">{{form_errors(form.homesubresult)}}</span>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group label-floating is-empty">
+												{{form_widget(form.awaysubresult,{"attr":{"class":"form-control","style":"    text-align: center;"}})}}
+												<span class="validate-input">{{form_errors(form.awaysubresult)}}</span>
+											</div>
+										</div>
+										<br>
+										<div class="col-md-12">
+											<div class="form-group label-floating is-empty">
+												<label class="control-label">Match state</label>
+												{{form_widget(form.state,{"attr":{"class":"form-control"}})}}
+												<span class="validate-input">{{form_errors(form.state)}}</span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group label-floating is-empty">
+											<img src="{{asset("img/club.png")|imagine_filter('club_thumb')}}" id="awayclub_image">
+											<label class="control-label">Away club </label>
+											{{form_widget(form.awayclub,{"attr":{"class":"form-control","onchange":"selectAwayClub(this)"}})}}
+											<span class="validate-input">{{form_errors(form.awayclub)}}</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-content">
+								<div class="form-group label-floating is-empty">
+									<label class="control-label">Match title</label>
+									{{form_widget(form.title,{"attr":{"class":"form-control"}})}}
+									<span class="validate-input">{{form_errors(form.title)}}</span>
+								</div>
+								<div class="form-group label-floating is-empty">
+									<label class="control-label">Match Competition</label>
+									{{form_widget(form.competition,{"attr":{"class":"form-control"}})}}
+									<span class="validate-input">{{form_errors(form.competition)}}</span>
+								</div>
+								<div class="form-group label-floating is-empty">
+									<label class="control-label">Match date/time</label>
+									{{form_widget(form.datetime)}}
+									<span class="validate-input">{{form_errors(form.datetime)}}</span>
+								</div>
+								<div class="form-group label-floating is-empty">
+									<label class="control-label">Match state</label>
+									{{form_widget(form.state,{"attr":{"class":"form-control"}})}}
+									<span class="validate-input">{{form_errors(form.state)}}</span>
+								</div>
+								<div class="form-group label-floating is-empty">
+									<label class="control-label">Match stadium</label>
+									{{form_widget(form.stadium,{"attr":{"class":"form-control"}})}}
+									<span class="validate-input">{{form_errors(form.stadium)}}</span>
+								</div>
+								<div class="form-group label-floating is-empty">
+									<label class="control-label">Youtube link highlights</label>
+									{{form_widget(form.highlights,{"attr":{"class":"form-control"}})}}
+									<span class="validate-input">{{form_errors(form.highlights)}}</span>
+								</div>
+								<br>
+								<div>
+									<label>
+										{{form_widget(form.enabled)}}  Enabled
+									</label>
+								</div>
+								<div>
+									<label>
+										{{form_widget(form.featured)}}  Featured
+									</label>
+								</div>
+								<br>
+							</div>
+							<div class="card-footer">
+								<span class="pull-right"><a href="{{path("app_match_index")}}" class="btn btn-fill btn-yellow"><i class="material-icons">arrow_back</i> Cancel</a>{{form_widget(form.save,{attr:{"class":"btn btn-fill btn-success"}})}}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				{{form_end(form)}}
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var images = {{ club_images|raw }};
+		var default_image = "{{asset("img/club.png")}}";
+		var obj_images = JSON.parse(images);
+		function selectAwayClub(sel) {
+			if (sel.value !=  "") {
+				$("#awayclub_image").attr("src",obj_images[sel.value]);
+			}else{
+				$("#awayclub_image").attr("src",default_image);
+			}
+		}
+		function selectHomeClub(sel) {
+			if (sel.value !=  "") {
+				$("#homeclub_image").attr("src",obj_images[sel.value]);
+			}else{
+				$("#homeclub_image").attr("src",default_image);
+			}
+		}
+	</script>
+{% endblock%}

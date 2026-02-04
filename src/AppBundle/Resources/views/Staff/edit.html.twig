@@ -1,0 +1,47 @@
+{% extends "AppBundle::layout.html.twig" %}
+{% block body%}
+    <div class="container-fluid">
+        <div class="row">
+            {{form_start(form)}}
+            <div class="col-sm-offset-1 col-md-10">
+                <div class="card">
+                    <div class="card-header card-header-icon" data-background-color="rose">
+                        <i class="material-icons">people_outline</i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">Edit {{form.vars.value.name}}</h4>
+                        <br>
+                        <center>
+                        <div class="fileinput fileinput-new text-center" style="width:250px !important;" data-provides="fileinput">
+                            <div class="fileinput-new thumbnail" >
+                                <a href="#" class="btn btn-success btn-sm btn-round btn-select"><i class="material-icons">image</i></a>
+                                <img  id="img-preview" src="{{asset(form.vars.value.media.link)|imagine_filter('staff_thumb')}}"  style="width:100%">
+                            </div>
+                            {{form_widget(form.file,{"attr":{"class":"file-hidden input-file img-selector","style":"    display: none;"}})}}
+                            <span class="validate-input">{{form_errors(form.file)}}</span>
+                        </div>
+                        </center>
+                        <div class="form-group label-floating is-empty">
+                            <label class="control-label">Full Name</label>
+                            {{form_widget(form.name,{"attr":{"class":"form-control"}})}}
+                            <span class="validate-input">{{form_errors(form.name)}}</span>
+                        </div>
+                        <div class="form-group label-floating is-empty">
+                            <label class="control-label">Status (coach , president ...)</label>
+                            {{form_widget(form.status,{"attr":{"class":"form-control"}})}}
+                            <span class="validate-input">{{form_errors(form.status)}}</span>
+                        </div>
+                        <div class="form-group label-floating is-empty">
+                            <label class="control-label">Biography</label>
+                            {{form_widget(form.bio,{"attr":{"class":"form-control"}})}}
+                            <span class="validate-input">{{form_errors(form.bio)}}</span>
+                        </div>
+                    </div>
+                    <span class="pull-right"><a href="{{path("app_team_staffs",{id:staff.team.id})}}" class="btn btn-fill btn-yellow"><i class="material-icons">arrow_back</i> Cancel</a>{{form_widget(form.save,{attr:{"class":"btn btn-fill btn-success"}})}}</span>
+
+                </div>
+            </div>
+            {{form_end(form)}}
+        </div>
+    </div>
+{% endblock%}

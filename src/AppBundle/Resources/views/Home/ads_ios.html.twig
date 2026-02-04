@@ -1,0 +1,111 @@
+{% extends "AppBundle::layout.html.twig" %}
+{% block body%}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="tab-moivie tab-channel">
+                        <a href="{{path("app_home_settings")}}" class="btn btn-tab-movie col-md-12"><i class="material-icons">phonelink_setup</i> Mobile Settings</a>
+                        <a href="{{path("app_home_notifications")}}" class="btn btn-tab-movie col-md-12"><i class="material-icons">notifications</i> Notifications Settings</a>
+                        <a href="{{path("app_home_ads")}}" class="btn btn-tab-movie col-md-12"><i class="material-icons">show_chart</i> Android Ads Settings</a>
+                        <a href="{{path("app_home_ios_ads")}}" class="btn btn-tab-movie-active col-md-12"><i class="material-icons">show_chart</i> iOS Ads Settings</a>
+                        <a href="{{path("app_home_edit_privacypolicy")}}" class="btn btn-tab-movie col-md-12"><i class="material-icons">privacy_tip</i> Privacy Policy</a>
+                        <a href="{{path("admin_change_password")}}" class="btn btn-tab-movie col-md-12"><i class="material-icons">lock</i> Change password</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header card-header-icon" data-background-color="rose">
+                        <i class="material-icons">monetization_on</i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">iOS Ads Settings</h4>
+                        {{form_start(form)}}
+                        <div class="panel-body">
+                            <label class="panel-title">Admob settings</label>
+                            <div class="form-group label-floating is-empty">
+                                <label class="control-label">Application id</label>
+                                {{form_widget(form.appidios,{"attr":{"class":"form-control"}})}}
+                            </div>
+                            <span class="validate-input">{{form_errors(form.appidios)}}</span>
+                            <div class="form-group label-floating is-empty">
+                                <label class="control-label">Publisher id</label>
+                                {{form_widget(form.publisheridios,{"attr":{"class":"form-control"}})}}
+                            </div>
+                            <span class="validate-input">{{form_errors(form.publisheridios)}}</span>
+                        </div>
+                        <div class="panel-body">
+                            <label class="panel-title">Ad Banner</label>
+                            <div class="form-group label-floating is-empty">
+                                <label class="control-label">Banner AdMob Id</label>
+                                {{form_widget(form.banneradmobidios,{"attr":{"class":"form-control"}})}}
+                            </div>
+                            <span class="validate-input">{{form_errors(form.banneradmobidios)}}</span>
+                            <div class="form-group label-floating is-empty">
+                                <label class="control-label">Banner Facebook Id</label>
+                                {{form_widget(form.bannerfacebookidios,{"attr":{"class":"form-control"}})}}
+                            </div>
+                            <span class="validate-input">{{form_errors(form.bannerfacebookidios)}}</span>
+                            <div class="form-group label-floating is-empty">
+                                <label class="control-label">Banner Display Type</label>
+                                {{form_widget(form.bannertypeios,{"attr":{"class":"form-control"}})}}
+                            </div>
+                            <span class="validate-input">{{form_errors(form.bannertypeios)}}</span>
+                        </div>
+                        <div class="panel-body">
+                            <label class="panel-title">Ad Native</label>
+                            <div class="form-group label-floating is-empty">
+                                <label class="control-label">Native AdMob Id</label>
+                                {{form_widget(form.nativeadmobidios,{"attr":{"class":"form-control"}})}}
+                            </div>
+                            <span class="validate-input">{{form_errors(form.nativeadmobidios)}}</span>
+                            <div class="form-group label-floating is-empty">
+                                <label class="control-label">Native Facebook Id</label>
+                                {{form_widget(form.nativefacebookidios,{"attr":{"class":"form-control"}})}}
+                            </div>
+                            <span class="validate-input">{{form_errors(form.nativefacebookidios)}}</span>
+                            <div class="form-group label-floating is-empty">
+                                <label class="control-label">Native Facebook Id</label>
+                                {{form_widget(form.nativeitemios,{"attr":{"class":"form-control"}})}}
+                            </div>
+                            <span class="validate-input">{{form_errors(form.nativeitemios)}}</span>
+                            <div class="form-group label-floating is-empty">
+                                <label class="control-label">Native Display Type</label>
+                                {{form_widget(form.nativetypeios,{"attr":{"class":"form-control"}})}}
+                            </div>
+                            <span class="validate-input">{{form_errors(form.nativetypeios)}}</span>
+                        </div>
+                        <div class="panel-body">
+                            <label class="panel-title">Ad Interstitial</label>
+                            <div class="form-group label-floating is-empty">
+                                <label class="control-label">Interstitial AdMob Id</label>
+                                {{form_widget(form.interstitialadmobidios,{"attr":{"class":"form-control"}})}}
+                            </div>
+                            <span class="validate-input">{{form_errors(form.interstitialadmobidios)}}</span>
+                            <div class="form-group label-floating is-empty">
+                                <label class="control-label">Interstitial Facebook Id</label>
+                                {{form_widget(form.interstitialfacebookidios,{"attr":{"class":"form-control"}})}}
+                            </div>
+                            <span class="validate-input">{{form_errors(form.interstitialfacebookidios)}}</span>
+                            <div class="form-group label-floating is-empty">
+                                <label class="control-label">Interstitial Display Type</label>
+                                {{form_widget(form.interstitialtypeios,{"attr":{"class":"form-control"}})}}
+                            </div>
+                            <span class="validate-input">{{form_errors(form.interstitialtypeios)}}</span>
+                            <div class="form-group label-floating is-empty">
+                                <label class="control-label">Click between interstitial Ad</label>
+                                {{form_widget(form.interstitialclickios,{"attr":{"class":"form-control"}})}}
+                            </div>
+                            <span class="validate-input">{{form_errors(form.interstitialclickios)}}</span>
+                        </div>
+
+                        <span class="pull-right">{{form_widget(form.save,{attr:{"class":"btn btn-fill btn-rose"}})}}</span>
+                    </div>
+                    {{form_end(form)}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock%}

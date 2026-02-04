@@ -1,0 +1,60 @@
+{% extends "AppBundle::layout.html.twig" %}
+{% block body%}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="row">
+					<div class="col-md-4">
+						<a href="{{path("app_club_index")}}" class="btn  btn-lg btn-warning btn-block"><i class="material-icons" style="font-size: 30px;">refresh</i> Refresh</a>
+					</div>
+					<div class="col-md-4">
+						<a class="btn btn btn-lg btn-yellow btn-block"><i class="material-icons" style="font-size: 30px;">military_tech</i> {{clubs|length}} clubs</a>
+					</div>
+					<div class="col-md-4">
+						<a href="{{path("app_club_add")}}" class="btn btn-rose btn-lg pull-right add-button btn-block" title=""><i class="material-icons" style="font-size: 30px;">add</i> new club </a>
+					</div>
+				</div>
+				<div class="row">
+					{% for club in clubs %}
+						<div class="col-md-3" >
+							<div class="card card-product card-post"  >
+								<img class="img " style="height:auto; border-top-left-radius: 5px;border-top-right-radius: 5px;padding: 20px;" src="{{asset(club.media.link)|imagine_filter("club_thumb")}}">
+								<div class="card-content" style="padding: 10px 10px;">
+									<div class="post-title" >
+										<center>
+										{{club.name}}
+										<p style="color:#555">({{club.country}})</p>
+										</center>
+									</div>
+								</div>
+								<div class="card-footer">
+									<center>
+									<a href="{{path("app_club_edit",{id:club.id})}}" class="btn btn-xs btn-success btn-simple" rel="tooltip" data-placement="top" title="" data-original-title="Edit">
+										<i class="material-icons">edit</i>
+									</a>
+									<a href="{{path("app_club_delete",{id:club.id})}}" class="btn btn-xs btn-danger btn-simple" rel="tooltip" data-placement="top" title="" data-original-title="Delete">
+										<i class="material-icons">close</i>
+									</a>
+									</center>
+								</div>
+							</div>
+						</div>
+					{% else %}
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-content">
+									<br>
+									<br>
+									<center><img src="{{asset("img/bg_empty.png")}}"  style="width: auto !important;" =""></center>
+									<br>
+									<br>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+				
+			</div>
+		</div>
+		
+	{% endblock%}

@@ -1,0 +1,69 @@
+{% extends "AppBundle::layout.html.twig" %}
+{% block body%}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-offset-1 col-md-10">
+                <div class="card">
+                    <div class="card-header card-header-icon" data-background-color="rose">
+                        <i class="material-icons">view_list</i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">New Trophy</h4>
+                        <br>
+                        {{form_start(form)}}
+                        <div class="row">
+                        <div class="col-md-2">
+                            <div class="fileinput fileinput-new text-center" style="    width: 100%;" data-provides="fileinput">
+                                <div class="fileinput-new thumbnail" style="    ">
+                                    <img  id="img-preview-1" src="{{asset("img/image_placeholder_product.jpg")|imagine_filter('trophy_icon')}}"  width="100%">
+                                    <a href="#" class="btn btn-rose btn-sm btn-select-1 select-file-relative"><i class="material-icons">image</i> Icon</a>
+                                </div>
+                                {{form_widget(form.fileicon,{"attr":{"class":"file-hidden input-file-1 img-selector-1","style":"    display: none;"}})}}
+                                <span class="validate-input">{{form_errors(form.fileicon)}}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="fileinput fileinput-new text-center" style="    width: 100%;" data-provides="fileinput">
+                                <div class="fileinput-new thumbnail" style="    ">
+                                    <img  id="img-preview" src="{{asset("img/image_placeholder_product.jpg")|imagine_filter('trophy_thumb')}}"  width="100%">
+                                    <a href="#" class="btn btn-rose btn-round btn-select"><i class="material-icons">image</i> Select cover </a>
+                                </div>
+                                {{form_widget(form.file,{"attr":{"class":"file-hidden input-file img-selector","style":"    display: none;"}})}}
+                            </div>
+                        </div>
+                        </div>
+                        <br>
+                        <div class="form-group label-floating is-empty">
+                            <label class="control-label">Trophy title</label>
+                            {{form_widget(form.title,{"attr":{"class":"form-control"}})}}
+                            <span class="validate-input">{{form_errors(form.title)}}</span>
+                        </div>
+                        <div class="form-group label-floating is-empty">
+                            <label class="control-label">Number</label>
+                            {{form_widget(form.number,{"attr":{"class":"form-control"}})}}
+                            <span class="validate-input">{{form_errors(form.number)}}</span>
+                        </div>
+                        <div class="form-group label-floating is-empty">
+                            <label class="control-label">Trophy description</label>
+                            {{form_widget(form.description,{"attr":{"class":"form-control"}})}}
+                            <span class="validate-input">{{form_errors(form.description)}}</span>
+                        </div>
+                        <div class="form-group label-floating is-empty" style=" margin-top: 0px !important; ">
+                            <label class="control-label">Trophy content</label>
+                            {{form_widget(form.content,{"attr":{"class":"form-control"}})}}
+                            <span class="validate-input">{{form_errors(form.content)}}</span>
+                        </div>
+                        <br>
+                        <div class="">
+                            <label>
+                                {{form_widget(form.enabled)}}  Enabled
+                            </label>
+                        </div>
+                        <span class="pull-right"><a href="{{path("app_team_trophies",{id:team.id})}}" class="btn btn-fill btn-yellow"><i class="material-icons">arrow_back</i> BACK TO {{team.title}}</a>{{form_widget(form.save,{attr:{"class":"btn btn-fill btn-success"}})}}</span>
+                        {{form_end(form)}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock%}

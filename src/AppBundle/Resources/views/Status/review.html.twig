@@ -1,0 +1,52 @@
+{% extends "AppBundle::layout.html.twig" %}
+{% block body%}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-offset-1 col-md-10">
+        <div class="card">
+          <div class="card-header card-header-icon" data-background-color="rose">
+            <i class="material-icons">check</i>
+          </div>
+          <div class="card-content">
+            <h4 class="card-title">Review "{{form.vars.value.description}}"</h4>
+            {{form_start(form)}}
+              <div class="form-group label-floating ">
+                  <label class="control-label">{{form.vars.value.type|capitalize}} description</label>
+                  {{form_widget(form.description,{"attr":{"class":"form-control"}})}}
+                  <span class="validate-input">{{form_errors(form.description)}}</span>
+              </div>
+            <img src="{{asset(form.vars.value.media.link)}}" class="fileinput-preview thumbnail " id="img-preview">
+            <br>
+
+            {% if form.vars.value.type == "youtube" %}
+                 <style>.embed-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; } .embed-container iframe, .embed-container object, .embed-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }</style><div class='embed-container'><iframe src='https://www.youtube.com/embed/{{form.vars.value.video.youtube}}' frameborder='0' allowfullscreen></iframe></div>                        <div class="form-group label-floating is-empty">
+            {% else %}
+              {% if form.vars.value.video != null %}
+              <video autobuffer autoloop loop controls width="100%">
+                <source id="video_here" src="{{asset(form.vars.value.video.link)}}">
+                <source id="video_here" src="{{asset(form.vars.value.video.link)}}">
+                <object type="video/ogg" data="{{asset(form.vars.value.video.link)}}">
+                <param name="src" value="{{asset(form.vars.value.video.link)}}">
+                <param name="autoplay" value="false">
+                <param name="autoStart" value="0">
+                <p><a href="{{asset(form.vars.value.video.link)}}">Download this video file.</a></p>
+                </object>
+              </video>
+              <br>
+              <br>
+              {% endif %}
+            {% endif %}
+            <div class="">
+              <label>
+                {{form_widget(form.comment)}}  Enabled Comment
+              </label>
+            </div>
+            <br>
+            <span class="pull-right"><a href="{{path("app_status_index")}}" class="btn btn-fill btn-yellow"><i class="material-icons">arrow_back</i> Cancel</a>{{form_widget(form.save,{attr:{"class":"btn btn-fill btn-rose"}})}}</span>
+            {{form_end(form)}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock%}

@@ -1,0 +1,46 @@
+{% extends "AppBundle::layout.html.twig" %}
+{% block body%}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-offset-2 col-md-8">
+                <div class="card">
+                    <div class="card-header card-header-icon" data-background-color="rose">
+                        <i class="material-icons">view_list</i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">New Article</h4>
+                        <br>
+                        {{form_start(form)}}
+                        <div class="fileinput fileinput-new text-center" style="    width: 100%;" data-provides="fileinput">
+                            <div class="fileinput-new thumbnail" style="    ">
+                                <img  id="img-preview" src="{{asset("img/image_placeholder_product.jpg")|imagine_filter('post_thumb')}}"  width="100%">
+                                <a href="#" class="btn btn-success btn-round btn-select"><i class="material-icons">image</i> SELECT IMAGE </a>
+                            </div>
+                            {{form_widget(form.file,{"attr":{"class":"file-hidden input-file img-selector","style":"    display: none;"}})}}
+                            <span class="validate-input">{{form_errors(form.file)}}</span>
+                        </div>
+                        <br>
+                        <div class="form-group label-floating is-empty">
+                            <label class="control-label">Article title</label>
+                            {{form_widget(form.title,{"attr":{"class":"form-control"}})}}
+                            <span class="validate-input">{{form_errors(form.title)}}</span>
+                        </div>
+                        <div class="form-group label-floating is-empty" style=" margin-top: 0px !important; ">
+                            <label class="control-label">Article content</label>
+                            {{form_widget(form.content,{"attr":{"class":"form-control"}})}}
+                            <span class="validate-input">{{form_errors(form.content)}}</span>
+                        </div>
+                        <br>
+                        <div class="">
+                            <label>
+                                {{form_widget(form.enabled)}}  Enabled
+                            </label>
+                        </div>
+                        <span class="pull-right"><a href="{{path("app_team_articles",{id:team.id})}}" class="btn btn-fill btn-yellow"><i class="material-icons">arrow_back</i> BACK TO {{team.title}}</a>{{form_widget(form.save,{attr:{"class":"btn btn-fill btn-success"}})}}</span>
+                        {{form_end(form)}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock%}

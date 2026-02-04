@@ -1,0 +1,49 @@
+{% extends "AppBundle::layout.html.twig" %}
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="tab-moivie tab-channel">
+                        <a href="{{path("app_team_edit",{"id":team.id})}}" class="btn btn-tab-movie col-md-12"><i class="material-icons">edit</i> Edit</a>
+                        <a href="{{path("app_team_articles",{"id":team.id})}}" class="btn btn-tab-movie-active col-md-12"><i class="material-icons">history_edu</i> Articles</a>
+                        <a href="{{path("app_team_index")}}" class="btn btn-tab-movie col-md-12"><i class="material-icons">arrow_back</i> Cancel</a>
+                    </div>
+                </div>
+            </div>
+            <a href="{{path("app_article_add",{"id":team.id})}}" rel="tooltip" data-placement="left" class=" btn btn-success btn-xs btn-round pull-right" data-original-title="Add {{team.title}}">
+                <i class="material-icons">add</i> Add {{team.title}}
+            </a>
+            <div class="col-md-9">
+                {% for post in team.articles %}
+                    <div class="col-md-6" >
+                        <div class="card card-product card-post"  >
+                            <img class="img " style="height:auto;background-color:#fff;  border-top-left-radius: 5px;border-top-right-radius: 5px;" src="{{asset(post.media.link)|imagine_filter("post_thumb")}}">
+                            <div class="card-content" style="padding: 10px 10px;">
+                                <div class="post-title" >
+                                    {{post.title}}
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <center>
+                                <a href="{{path("app_article_edit",{id:post.id})}}" class="btn btn-xs btn-success btn-simple" rel="tooltip" data-placement="top" title="" data-original-title="Edit">
+                                    <i class="material-icons">edit</i>
+                                </a>
+                                <a href="{{path("app_article_delete",{id:post.id})}}" class="btn btn-xs btn-danger btn-simple" rel="tooltip" data-placement="top" title="" data-original-title="Delete">
+                                    <i class="material-icons">close</i>
+                                </a>
+                                <a href="{{path("app_article_up",{id:post.id})}}" class="btn btn-xs btn-info btn-round" rel="tooltip" data-placement="top" title="" data-original-title="Up">
+                                    <i class="material-icons">keyboard_arrow_up</i>
+                                </a>
+                                <a href="{{path("app_article_down",{id:post.id})}}" class="btn btn-xs btn-info btn-round" rel="tooltip" data-placement="top" title="" data-original-title="Down">
+                                    <i class="material-icons">keyboard_arrow_down</i>
+                                </a>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock%}

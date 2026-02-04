@@ -1,0 +1,101 @@
+{% extends "AppBundle::layout.html.twig" %}
+{% block body%}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="row">
+					<div class="col-md-4">
+						<a href="{{path("app_team_index")}}" class="btn  btn-lg btn-warning btn-block"><i class="material-icons" style="font-size: 30px;">refresh</i> Refresh</a>
+					</div>
+					<div class="col-md-4">
+						<a class="btn btn btn-lg btn-yellow btn-block"><i class="material-icons" style="font-size: 30px;">scatter_plot</i> {{teams|length}} teams</a>
+					</div>
+					<div class="col-md-4">
+						<div class="dropdown">
+							<a href="#" data-toggle="dropdown" aria-expanded="false" class="btn btn-success btn-lg pull-right add-button col-md-12"title=""><i class="material-icons" style="font-size: 30px;">add_box</i> NEW ITEM </a>
+							<ul class="dropdown-menu dropdown-menu-right" role="menu">
+								<li>
+									<a href="{{path("app_team_add")}}"><i class="material-icons">checklist</i> NEW TEAM SECION</a>
+								</li>
+								<li>
+									<a href="{{path("app_social_add")}}"><i class="material-icons">public</i> ADD SOCIAL LINK</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>						
+
+				<div class="row">
+					{% for social in socials %}
+						<div class="col-md-3">
+							<div class="card social-card"  style="background-color: #{{social.color}};">
+								<img src="{{asset(social.media.link)|imagine_filter('social_icon')}}" class="icon-element" >
+								<span>
+									<p>{{ social.social }}</p>
+									<a href="{{ social.value }}">{{ (social.username == null)? social.social : social.username }}</a>
+								</span>
+							</div>
+							<a href="{{path("app_social_edit",{"id":social.id})}}" rel="tooltip" data-placement="left" class=" btn btn-primary btn-xs btn-round pull-right" data-original-title="Edit">
+								<i class="material-icons">edit</i>
+							</a>
+							<a href="{{path("app_social_delete",{"id":social.id})}}" rel="tooltip" data-placement="left" class=" btn btn-danger btn-xs btn-round pull-right" data-original-title="Delete">
+								<i class="material-icons">delete</i>
+							</a>
+							<a href="{{path("app_social_up",{"id":social.id})}}" rel="tooltip" data-placement="left" class=" btn btn-info btn-xs btn-round pull-right" data-original-title="Up">
+								<i class="material-icons">keyboard_arrow_up</i>
+							</a>
+							<a href="{{path("app_social_down",{"id":social.id})}}" rel="tooltip" data-placement="left" class=" btn btn-info btn-xs btn-round pull-right" data-original-title="Down">
+								<i class="material-icons">keyboard_arrow_down</i>
+							</a>
+						</div>
+					{% endfor %}
+				</div>
+				<hr/>
+				<div class="row">
+					{% for team in teams %}
+						<div class="col-md-4">
+							<div class="card"  style="padding-bottom: 10px;">
+								<div class="card-content" style="  padding: 0px;">
+									<img src="{{asset(team.media.link)|imagine_filter('team_thumb')}}" class="image-element" style="width:100%; height:auto; position: relative !important">
+									<img src="{{asset(team.icon.link)|imagine_filter('team_icon')}}" class="icon-element" >
+								</div>
+								<div class="card-content" style="padding: 10px 10px;">
+									<div class="post-title" style="height: auto;">
+										{{team.title}}
+									</div>
+								</div>
+								<div class="card-footer">
+									<a href="{{path("app_team_edit",{"id":team.id})}}" rel="tooltip" data-placement="left" class=" btn btn-primary btn-xs btn-round pull-right" data-original-title="Edit">
+										<i class="material-icons">edit</i>
+									</a>
+									<a href="{{path("app_team_delete",{"id":team.id})}}" rel="tooltip" data-placement="left" class=" btn btn-danger btn-xs btn-round pull-right" data-original-title="Delete">
+										<i class="material-icons">delete</i>
+									</a>
+									<a href="{{path("app_team_up",{"id":team.id})}}" rel="tooltip" data-placement="left" class=" btn btn-info btn-xs btn-round pull-right" data-original-title="Up">
+										<i class="material-icons">keyboard_arrow_up</i>
+									</a>
+									<a href="{{path("app_team_down",{"id":team.id})}}" rel="tooltip" data-placement="left" class=" btn btn-info btn-xs btn-round pull-right" data-original-title="Down">
+										<i class="material-icons">keyboard_arrow_down</i>
+									</a>
+								</div>
+							</div>
+						</div>
+					{% else %}
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-content">
+									<br>
+									<br>
+									<center><img src="{{asset("img/bg_empty.png")}}"  style="width: auto !important;"></center>
+									<br>
+									<br>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+				
+			</div>
+		</div>
+		
+	{% endblock%}

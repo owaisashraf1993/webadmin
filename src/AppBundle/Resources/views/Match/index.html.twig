@@ -1,0 +1,83 @@
+{% extends "AppBundle::layout.html.twig" %}
+{% block body%}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="row">
+					<div class="col-md-4">
+						<a href="{{path("app_match_index")}}" class="btn  btn-lg btn-warning btn-block"><i class="material-icons" style="font-size: 30px;">refresh</i> Refresh</a>
+					</div>
+					<div class="col-md-4">
+						<a class="btn btn btn-lg btn-yellow btn-block"><i class="material-icons" style="font-size: 30px;">sports_volleyball</i> {{matchs_count}} Matchs</a>
+					</div>
+					<div class="col-md-4">
+						<a href="{{path("app_match_add")}}" class="btn btn-rose btn-lg pull-right add-button btn-block" title=""><i class="material-icons" style="font-size: 30px;">add_box</i> NEW MATCH </a>
+					</div>
+				</div>
+				<div class="row">
+					{% for match in matchs %}
+						<div class="col-md-6">
+							<div class="card">
+								<div class="card-header match-header">{{ match.competition.name }}  - {{ match.title }} </div>
+								<div class="card-content" >
+									<div class="row">
+										<div class="col-md-3">
+											<img src="{{asset(match.homeclub.media.link)|imagine_filter('club_thumb')}}">
+										</div>
+										<div class="col-md-6">
+											{% if match.homeresult != null and match.awayresult!=null %}
+												<div class="match-result">{{ match.homeresult }} : {{ match.awayresult }}</div>
+											{% endif %}
+											{% if match.homesubresult != null and match.awaysubresult!=null %}
+												<div class="match-sub-result">{{ match.homesubresult }} : {{ match.awaysubresult }}</div>
+											{% endif %}
+											<br>
+											<center><a><i class="material-icons" >today</i> {{ match.datetime|date("h:i A, F d,Y") }}</a></center>
+										</div>
+										<div class="col-md-3">
+											<img src="{{ asset(match.awayclub.media.link)|imagine_filter('club_thumb') }}">
+										</div>
+									</div>
+									
+									<div class="row">
+										<div class="col-md-5"><br>{{ match.homeclub.name }}</div>
+										{% if match.state ==  "programmed" %}<div class="col-md-2"><center><span class="label label-primary">{{ match.state }}</span></center></div>{% endif %}
+										{% if match.state ==  "playing" %}<div class="col-md-2"><center><span class="label label-info">{{ match.state }}</span></center></div>{% endif %}
+										{% if match.state ==  "ended" %}<div class="col-md-2"><center><span class="label label-success">{{ match.state }}</span></center></div>{% endif %}
+										{% if match.state ==  "canceled" %}<div class="col-md-2"><center><span class="label btn-danger">{{ match.state }}</span></center></div>{% endif %}
+										{% if match.state ==  "postponed" %}<div class="col-md-2"><center><span class="label label-warning">{{ match.state }}</span></center></div>{% endif %}
+										<div class="col-md-5"><span class="pull-right"><br>{{ match.awayclub.name }}</span></div>
+									</div>
+								</div>
+								<div class="card-footer" style="    text-align: center;">
+									<a href="{{path("app_match_edit",{"id":match.id})}}" rel="tooltip" data-placement="top" class=" btn btn-primary btn-xs btn-round" data-original-title="Edit">
+										<i class="material-icons">edit</i>
+									</a>
+									<a href="{{path("app_match_delete",{"id":match.id})}}" rel="tooltip" data-placement="top" class=" btn btn-danger btn-xs btn-round" data-original-title="Delete">
+										<i class="material-icons">delete</i>
+									</a>
+									<a href="{{path("app_home_notif_match",{id:match.id,title:match.name,message:match.fullname,icon:asset(match.competition.media.link)|imagine_filter('competition_thumb')})}}" rel="tooltip" data-placement="top" class=" btn btn-success btn-xs btn-round" data-original-title="Match Notiifcation">
+										<i class="material-icons">notifications</i>
+									</a>
+								</div>
+							</div>
+						</div>
+					{% else %}
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-content">
+									<br>
+									<br>
+									<center><img src="{{asset("img/bg_empty.png")}}"  style="width: auto !important;" ></center>
+									<br>
+									<br>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+				
+			</div>
+		</div>
+		
+	{% endblock%}

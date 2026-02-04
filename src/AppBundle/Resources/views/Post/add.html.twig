@@ -1,0 +1,61 @@
+{% extends "AppBundle::layout.html.twig" %}
+{% block body%}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-offset-2 col-md-8">
+				<div class="card">
+					<div class="card-header card-header-icon" data-background-color="rose">
+						<i class="material-icons">library_books</i>
+					</div>
+					<div class="card-content">
+						<h4 class="card-title">New Post</h4>
+						<br>
+						{{form_start(form)}}
+						<div class="form-group label-floating is-empty">
+							<label class="control-label">Post title</label>
+							{{form_widget(form.title,{"attr":{"class":"form-control"}})}}
+							<span class="validate-input">{{form_errors(form.title)}}</span>
+						</div>
+						<div class="fileinput fileinput-new text-center" style="    width: 100%;" data-provides="fileinput">
+							<div class="fileinput-new thumbnail" style="    ">
+								<img  id="img-preview" src="{{asset("img/image_placeholder_product.jpg")|imagine_filter('post_thumb')}}"  width="100%">
+								<a href="#" class="btn btn-success btn-round btn-select"><i class="material-icons">image</i> SELECT IMAGE </a>
+							</div>
+							{{form_widget(form.file,{"attr":{"class":"file-hidden input-file img-selector","style":"    display: none;"}})}}
+							<span class="validate-input">{{form_errors(form.file)}}</span>
+						</div>
+						<div class="form-group label-floating is-empty" style=" margin-top: 0px !important; ">
+							<label class="control-label">Post content</label>
+							{{form_widget(form.content,{"attr":{"class":"form-control"}})}}
+							<span class="validate-input">{{form_errors(form.content)}}</span>
+						</div>
+						<div class="form-group label-floating is-empty">
+							<label>
+								{{form_widget(form.enabled)}}  Enabled
+							</label>
+							<br>
+							<label>
+								{{form_widget(form.comment)}}  Enabled Comments
+							</label>
+						</div>
+						<div class="form-group label-floating " style=" margin-top: 0px !important; ">
+							<label class="control-label">Tags (Ex:anim,art,hero)</label>
+							<br>
+							{{form_widget(form.tags,{"attr":{"class":"input-tags"}})}}
+							<span class="validate-input">{{form_errors(form.tags)}}</span>
+						</div>
+						<script>
+							$('.input-tags').selectize({
+								persist: false,
+								createOnBlur: true,
+								create: true
+							});
+						</script>
+						<span class="pull-right"><a href="{{path("app_post_index")}}" class="btn btn-fill btn-yellow"><i class="material-icons">arrow_back</i> Cancel</a>{{form_widget(form.save,{attr:{"class":"btn btn-fill btn-rose"}})}}</span>
+						{{form_end(form)}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock%}

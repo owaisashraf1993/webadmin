@@ -1,0 +1,26 @@
+### Symfony ###
+/app/config/parameters.yml
+/app/bootstrap.php.cache
+/var/*
+!/var/cache
+/var/cache/*
+!var/cache/.gitkeep
+/var/logs/*
+!var/logs/.gitkeep
+/var/sessions/*
+!var/sessions/.gitkeep
+/vendor/
+/web/bundles/
+
+### Composer ###
+composer.phar
+composer.lock
+
+### OS generated ###
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

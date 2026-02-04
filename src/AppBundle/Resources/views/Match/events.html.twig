@@ -1,0 +1,161 @@
+{% extends "AppBundle::layout.html.twig" %}
+{% block body%}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-offset-1  col-md-10">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card card-stats card-initial" style="margin: 15px 0;">
+							<div class="card-header " data-background-color="green">
+								<i class="material-icons">sports_volleyball</i>
+							</div>
+							<div class="card-content trailer-body">
+								<h4 class="title">Match facts</h4>
+							</div>
+							<div class="tab-moivie">
+								<a href="{{path("app_match_edit",{"id":match.id})}}" class="btn btn-tab-movie"><i class="material-icons">edit</i> Edit</a>
+								<a href="{{path("app_match_events",{"id":match.id})}}" class="btn btn-tab-movie-active "><i class="material-icons">shutter_speed</i> MATCH FACTS</a>
+								<a href="{{path("app_match_statistics",{"id":match.id})}}" class="btn btn-tab-movie"><i class="material-icons">donut_large</i> STATISTCS</a>
+								<a href="{{path("app_match_notification",{"id":form.vars.value.id})}}" class="btn btn-tab-movie"><i class="material-icons">notifications</i> Result notification</a>
+				
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-header match-header">{{ match.competition.name }}  - {{ match.title }} </div>
+							{{ form_start(form) }}
+							<div class="card-content" >
+								<div class="row">
+									<div class="col-md-3">
+										<div class="form-group label-floating is-empty">
+											<br>
+											<br>
+											<img src="{{asset(match.homeclub.media.link)|imagine_filter('club_thumb')}}">
+											<center><br>{{ match.homeclub.name }}</center>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<center>Match Result</center>
+										<br>
+										<div class="col-md-6">
+											<div class="form-group label-floating is-empty">
+												{{form_widget(form.homeresult,{"attr":{"class":"form-control result-control"}})}}
+												<span class="validate-input">{{form_errors(form.homeresult)}}</span>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group label-floating is-empty">
+												{{form_widget(form.awayresult,{"attr":{"class":"form-control result-control"}})}}
+												<span class="validate-input">{{form_errors(form.awayresult)}}</span>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group label-floating is-empty">
+												{{form_widget(form.homesubresult,{"attr":{"class":"form-control","style":"    text-align: center;"}})}}
+												<span class="validate-input">{{form_errors(form.homesubresult)}}</span>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group label-floating is-empty">
+												{{form_widget(form.awaysubresult,{"attr":{"class":"form-control","style":"    text-align: center;"}})}}
+												<span class="validate-input">{{form_errors(form.awaysubresult)}}</span>
+											</div>
+										</div>
+										<div class="col-md-12">
+											<div class="form-group label-floating is-empty">
+												<label class="control-label">Match state</label>
+												{{form_widget(form.state,{"attr":{"class":"form-control"}})}}
+												<span class="validate-input">{{form_errors(form.state)}}</span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<br>
+										<br>
+										<div class="form-group label-floating is-empty">
+											<img src="{{ asset(match.awayclub.media.link)|imagine_filter('club_thumb') }}">
+											<center><br>{{ match.awayclub.name }}</center>
+										</div>
+									</div>
+								</div>
+								<br>
+							</div>
+							<div class="card-footer">
+								<span class="pull-right"><a href="{{path("app_match_index")}}" class="btn btn-fill btn-yellow"><i class="material-icons">arrow_back</i> Cancel</a>{{form_widget(form.save,{attr:{"class":"btn btn-fill btn-success"}})}}</span>
+							</div>
+							{{ form_end(form) }}
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-content">
+								{% for event in match.events %}
+									<div class="row event-row">
+										<div class="col-md-9">
+											{% if event.type == "match" %}
+												<div class="event-match">
+													<div class="event-div">
+														<span>{{event.time}}</span>
+														<img src="{{event.action.media.link|imagine_filter('action_thumb')}}">
+														<span>{{event.title}}</span>
+														{% if event.subtitle != null %}<span> - {{event.subtitle}}</span>{% endif %}
+													</div>
+												</div>
+											{% elseif event.type == "away" %}
+												<div class="event-div event-away">
+													<span class="pull-right">{{event.time}}</span>
+													<img  class="pull-right"src="{{event.action.media.link|imagine_filter('action_thumb')}}">
+													<span class="pull-right">{{event.title}}</span>
+													{% if event.subtitle != null %}<span class="pull-right"> {{event.subtitle}} - </span>{% endif %}
+												</div>
+											{% elseif event.type == "home" %}
+												<div class="event-div event-home">
+													<span>{{event.time}}</span>
+													<img src="{{event.action.media.link|imagine_filter('action_thumb')}}">
+													<span>{{event.title}}</span>
+													{% if event.subtitle != null %}<span> - {{event.subtitle}}</span>{% endif %}
+												</div>
+											{% endif %}
+										</div>
+										<div class="col-md-3">
+											<center>
+												<a href="{{path("app_match_events_down",{"id":event.id})}}" rel="tooltip" data-placement="left" class=" btn btn-primary btn-xs btn-round" data-original-title="Down">
+													<i class="material-icons">keyboard_arrow_down</i>
+												</a><a href="{{path("app_match_events_up",{"id":event.id})}}" rel="tooltip" data-placement="left" class=" btn btn-primary btn-xs btn-round" data-original-title="Up">
+													<i class="material-icons">keyboard_arrow_up</i>
+												</a><a href="{{path("app_match_events_delete",{"id":event.id})}}" rel="tooltip" data-placement="left" class=" btn btn-danger btn-xs btn-round" data-original-title="Delete">
+													<i class="material-icons">delete</i>
+												</a><a href="{{path("app_match_notification_event",{"id":event.id})}}" rel="tooltip" data-placement="left" class=" btn btn-success btn-xs btn-round" data-original-title="Notiifcation">
+													<i class="material-icons">notifications</i>
+												</a>
+											</center>
+										</div>
+									</div>
+
+								{% endfor %}
+							</div>
+							<br>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-content">
+								<div class="row">
+									{{ form_start(form_event) }}
+									<div class="col-md-2">{{form_widget(form_event.time,{"attr":{"class":"form-control","placeholder":"Time event"}})}}</div>
+									<div class="col-md-3">{{form_widget(form_event.action,{"attr":{"class":"form-control"}})}}</div>
+									<div class="col-md-3">{{form_widget(form_event.title,{"attr":{"class":"form-control","placeholder":"Title"}})}} {{form_widget(form_event.subtitle,{"attr":{"class":"form-control","placeholder":"Sub-title"}})}}</div>
+									<div class="col-md-3">{{form_widget(form_event.type,{"attr":{"class":"form-control"}})}}</div>
+									<div class="col-md-1">{{form_widget(form_event.save,{"attr":{"class":"btn btn-event btn-success"}})}}</div>
+									{{ form_end(form_event) }}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+{% endblock %}

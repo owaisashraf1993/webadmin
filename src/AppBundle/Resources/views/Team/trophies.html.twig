@@ -1,0 +1,56 @@
+{% extends "AppBundle::layout.html.twig" %}
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="tab-moivie tab-channel">
+                        <a href="{{path("app_team_edit",{"id":team.id})}}" class="btn btn-tab-movie col-md-12"><i class="material-icons">edit</i> Edit</a>
+                        <a href="{{path("app_team_trophies",{"id":team.id})}}" class="btn btn-tab-movie-active col-md-12"><i class="material-icons">emoji_events</i> Trophies</a>
+                        <a href="{{path("app_team_index")}}" class="btn btn-tab-movie col-md-12"><i class="material-icons">arrow_back</i> Cancel</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-12" >
+                        <a href="{{path("app_trophy_add",{"id":team.id})}}" rel="tooltip" data-placement="left" class=" btn btn-success btn-xs btn-round pull-right" data-original-title="NEW TROPHY AT {{team.title}}">
+                            <i class="material-icons">add</i> NEW TROPHY
+                        </a>
+                    </div>
+                    {% for trophy in team.trophies %}
+                        <div class="col-md-6" >
+                            <div class="card card-product card-post"  >
+                                <div class="card-content" style="  padding: 0px;">
+                                    <img src="{{asset(trophy.media.link)|imagine_filter('trophy_thumb')}}" class="image-element" style="width:100%; height:auto; position: relative !important">
+                                    <img src="{{asset(trophy.icon.link)|imagine_filter('trophy_icon')}}" class="icon-element" style="width:auto !important;     background: #000000a6;padding: 5px;">
+                                </div>
+                                <div class="card-content" style="padding: 10px 10px !important;">
+                                    <div class="post-title" style="height: auto;">
+                                        {{trophy.title}}
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <center>
+                                    <a href="{{path("app_trophy_edit",{id:trophy.id})}}" class="btn btn-xs btn-success btn-simple" rel="tooltip" data-placement="top" title="" data-original-title="Edit">
+                                        <i class="material-icons">edit</i>
+                                    </a>
+                                    <a href="{{path("app_trophy_delete",{id:trophy.id})}}" class="btn btn-xs btn-danger btn-simple" rel="tooltip" data-placement="top" title="" data-original-title="Delete">
+                                        <i class="material-icons">close</i>
+                                    </a>
+                                    <a href="{{path("app_trophy_up",{id:trophy.id})}}" class="btn btn-xs btn-info btn-round" rel="tooltip" data-placement="top" title="" data-original-title="Up">
+                                        <i class="material-icons">keyboard_arrow_up</i>
+                                    </a>
+                                    <a href="{{path("app_trophy_down",{id:trophy.id})}}" class="btn btn-xs btn-info btn-round" rel="tooltip" data-placement="top" title="" data-original-title="Down">
+                                        <i class="material-icons">keyboard_arrow_down</i>
+                                    </a>
+                                    </center>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock%}

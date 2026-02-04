@@ -1,0 +1,162 @@
+{% extends "AppBundle::layout.html.twig" %}
+{% block body%}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-offset-1  col-md-10">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card card-stats card-initial" style="margin: 15px 0;">
+							<div class="card-header " data-background-color="green">
+								<i class="material-icons">sports_volleyball</i>
+							</div>
+							<div class="card-content trailer-body">
+								<h4 class="title">Match statistics</h4>
+							</div>
+							<div class="tab-moivie">
+								<a href="{{path("app_match_edit",{"id":match.id})}}" class="btn btn-tab-movie"><i class="material-icons">edit</i> Edit</a>
+								<a href="{{path("app_match_events",{"id":match.id})}}" class="btn btn-tab-movie "><i class="material-icons">shutter_speed</i> MATCH FACTS</a>
+								<a href="{{path("app_match_statistics",{"id":match.id})}}" class="btn btn-tab-movie-active"><i class="material-icons">donut_large</i> STATISTCS</a>
+								<a href="{{path("app_match_notification",{"id":form.vars.value.id})}}" class="btn btn-tab-movie"><i class="material-icons">notifications</i> Result notification</a>
+							
+							</div>
+						</div>
+					</div>
+					{{form_start(form)}}
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-header match-header">{{ match.competition.name }}  - {{ match.title }} </div>
+							<div class="card-content" >
+								<div class="row">
+									<div class="col-md-3">
+										<div class="form-group label-floating is-empty">
+											<br>
+											<br>
+											<img src="{{asset(match.homeclub.media.link)|imagine_filter('club_thumb')}}">
+											<center><br>{{ match.homeclub.name }}</center>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<center>Match Result</center>
+										<br>
+										<div class="col-md-6">
+											<div class="form-group label-floating is-empty">
+												{{form_widget(form.homeresult,{"attr":{"class":"form-control result-control"}})}}
+												<span class="validate-input">{{form_errors(form.homeresult)}}</span>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group label-floating is-empty">
+												{{form_widget(form.awayresult,{"attr":{"class":"form-control result-control"}})}}
+												<span class="validate-input">{{form_errors(form.awayresult)}}</span>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group label-floating is-empty">
+												{{form_widget(form.homesubresult,{"attr":{"class":"form-control","style":"    text-align: center;"}})}}
+												<span class="validate-input">{{form_errors(form.homesubresult)}}</span>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group label-floating is-empty">
+												{{form_widget(form.awaysubresult,{"attr":{"class":"form-control","style":"    text-align: center;"}})}}
+												<span class="validate-input">{{form_errors(form.awaysubresult)}}</span>
+											</div>
+										</div>
+										<div class="col-md-12">
+											<div class="form-group label-floating is-empty">
+												<label class="control-label">Match state</label>
+												{{form_widget(form.state,{"attr":{"class":"form-control"}})}}
+												<span class="validate-input">{{form_errors(form.state)}}</span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<br>
+										<br>
+										<div class="form-group label-floating is-empty">
+											<img src="{{ asset(match.awayclub.media.link)|imagine_filter('club_thumb') }}">
+											<center><br>{{ match.awayclub.name }}</center>
+										</div>
+									</div>
+								</div>
+								<br>
+							</div>
+							<div class="card-content">
+								<ul class="infos" data-prototype="{{ form_widget(form.infos.vars.prototype)|e('html_attr') }}">
+									{# iterate over each existing info and render its only field: name #}
+									{% for info in form.infos %}
+										<li>{{ form_row(info.home) }} {{ form_row(info.name) }} {{ form_row(info.away) }}</li>
+									{% endfor %}
+								</ul>
+							</div>
+							<div class="card-content">
+								<span class="pull-right"><a href="{{path("app_match_index")}}" class="btn btn-fill btn-yellow"><i class="material-icons">arrow_back</i> Cancel</a>{{form_widget(form.save,{attr:{"class":"btn btn-fill btn-success"}})}}</span>
+							</div>
+						</div>
+					</div>
+					{{form_end(form)}}
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+	var $collectionHolder;
+	// setup an "add a info" link
+	var $addTagLink = $('<a href="#" class="btn btn-block btn-info ">ADD STATISTIC</a>');
+	var $newLinkLi = $('<li></li>').append($addTagLink);
+	jQuery(document).ready(function() {
+	// Get the ul that holds the collection of infos
+	$collectionHolder = $('ul.infos');
+	// add the "add a info" anchor and li to the infos ul
+	$collectionHolder.append($newLinkLi);
+	// count the current form inputs we have (e.g. 2), use that as the new
+	// index when inserting a new item (e.g. 2)
+	$collectionHolder.data('index', $collectionHolder.find(':input').length);
+	$addTagLink.on('click', function(e) {
+	// prevent the link from creating a "#" on the URL
+	e.preventDefault();
+	// add a new info form (see next code block)
+	addTagForm($collectionHolder, $newLinkLi);
+	});
+	});
+	function addTagForm($collectionHolder, $newLinkLi) {
+	// Get the data-prototype explained earlier
+	var prototype = $collectionHolder.data('prototype');
+	// get the new index
+	var index = $collectionHolder.data('index');
+	var newForm = prototype;
+	// You need this only if you didn't set 'label' => false in your infos field in TaskType
+	// Replace '__name__label__' in the prototype's HTML to
+	// instead be a number based on how many items we have
+	// newForm = newForm.replace(/__name__label__/g, index);
+	// Replace '__name__' in the prototype's HTML to
+	// instead be a number based on how many items we have
+	newForm = newForm.replace(/__name__/g, index);
+	// increase the index with one for the next item
+	$collectionHolder.data('index', index + 1);
+	// Display the form in the page in an li, before the "Add a info" link li
+	var $newFormLi = $('<li></li>').append(newForm);
+	$newLinkLi.before($newFormLi);
+	addTagFormDeleteLink($newFormLi);
+	}
+	jQuery(document).ready(function() {
+	// Get the ul that holds the collection of infos
+	$collectionHolder = $('ul.infos');
+	// add a delete link to all of the existing info form li elements
+	$collectionHolder.find('li').each(function() {
+	addTagFormDeleteLink($(this));
+	});
+	// ... the rest of the block from above
+	});
+	function addTagFormDeleteLink($infoFormLi) {
+	var $removeFormA = $('<a href="#" class="delete-item btn-danger"><i class="material-icons">delete</i></a>');
+	$infoFormLi.append($removeFormA);
+	$removeFormA.on('click', function(e) {
+	// prevent the link from creating a "#" on the URL
+	e.preventDefault();
+	// remove the li for the info form
+	$infoFormLi.remove();
+	});
+	}
+	</script>
+{% endblock %}

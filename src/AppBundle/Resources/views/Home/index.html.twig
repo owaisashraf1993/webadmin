@@ -1,0 +1,194 @@
+{% extends "AppBundle::layout.html.twig" %}
+{% block body%}
+<div class="container-fluid">
+    <div class="row">
+        
+        <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="card card-stats  my-statis-card">
+                <div class="card-header" data-background-color="rose">
+                    <i class="material-icons">group</i>
+                </div>
+                <div class="card-content">
+                     <h3 class="title">{{users_count}}</h3>
+                    <p class="category">Users</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="card card-stats  my-statis-card">
+                <div class="card-header" data-background-color="green">
+                    <i class="material-icons">sports_handball</i>
+                </div>
+                <div class="card-content">
+                     <h3 class="title">{{players_count}}</h3>
+                    <p class="category">Players</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="card card-stats  my-statis-card">
+                <div class="card-header" data-background-color="red">
+                    <i class="material-icons">military_tech</i>
+                </div>
+                <div class="card-content">
+                     <h3 class="title">{{competition_count}}</h3>
+                    <p class="category">Competitions</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="card card-stats  my-statis-card">
+                <div class="card-header" data-background-color="blue">
+                    <i class="material-icons">sports_volleyball</i>
+                </div>
+                <div class="card-content">
+                     <h3 class="title">{{matches_count}}</h3>
+                    <p class="category">Matches</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="card card-stats  my-statis-card">
+                <div class="card-header" data-background-color="orange">
+                    <i class="material-icons">flag</i>
+                </div>
+                <div class="card-content">
+                     <h3 class="title">{{country_count}}</h3>
+                    <p class="category">Countries</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="card card-stats  my-statis-card">
+                <div class="card-header" data-background-color="purple">
+                    <i class="material-icons">help</i>
+                </div>
+                <div class="card-content">
+                     <h3 class="title">{{question_count}}</h3>
+                    <p class="category">Questions</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="card card-stats  my-statis-card">
+                <div class="card-header" data-background-color="rose">
+                    <i class="material-icons">extension</i>
+                </div>
+                <div class="card-content">
+                     <h3 class="title">{{club_count}}</h3>
+                    <p class="category">Adversaries</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="card card-stats  my-statis-card">
+                <div class="card-header" data-background-color="green">
+                    <i class="material-icons">library_books</i>
+                </div>
+                <div class="card-content">
+                     <h3 class="title">{{posts}}</h3>
+                    <p class="category">Posts</p>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="card card-stats  my-statis-card">
+                <div class="card-header" data-background-color="red">
+                    <i class="material-icons">remove_red_eye</i>
+                </div>
+                <div class="card-content">
+                     <h3 class="title">{{post_views}}</h3>
+                    <p class="category">Posts Views</p>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="card card-stats  my-statis-card">
+                <div class="card-header" data-background-color="blue">
+                    <i class="material-icons">share</i>
+                </div>
+                <div class="card-content">
+                     <h3 class="title">{{post_shares}}</h3>
+                    <p class="category">Posts Shares</p>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="card card-stats  my-statis-card">
+                <div class="card-header" data-background-color="orange">
+                    <i class="material-icons">chrome_reader_mode</i>
+                </div>
+                <div class="card-content">
+                     <h3 class="title">{{status_count}}</h3>
+                    <p class="category">Status</p>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="card card-stats  my-statis-card">
+                <div class="card-header" data-background-color="purple">
+                    <i class="material-icons">remove_red_eye</i>
+                </div>
+                <div class="card-content">
+                     <h3 class="title">{{status_views}}</h3>
+                    <p class="category">Status Views</p>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="card card-stats  my-statis-card">
+                <div class="card-header" data-background-color="rose">
+                    <i class="material-icons">share</i>
+                </div>
+                <div class="card-content">
+                     <h3 class="title">{{status_shares}}</h3>
+                    <p class="category">Status Shares</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="card card-stats  my-statis-card">
+                <div class="card-header" data-background-color="green">
+                    <i class="material-icons">download</i>
+                </div>
+                <div class="card-content">
+                     <h3 class="title">{{status_downloads}}</h3>
+                    <p class="category">Status Downloads</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="card card-stats  my-statis-card">
+                <div class="card-header" data-background-color="red">
+                    <i class="material-icons">comment</i>
+                </div>
+                <div class="card-content">
+                     <h3 class="title">{{comment_count}}</h3>
+                    <p class="category">Comments</p>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="card card-stats  my-statis-card">
+                <div class="card-header" data-background-color="blue">
+                    <i class="material-icons">message</i>
+                </div>
+                <div class="card-content">
+                     <h3 class="title">{{support_count}}</h3>
+                    <p class="category">Support and Reports</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock%}

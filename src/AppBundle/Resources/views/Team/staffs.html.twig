@@ -1,0 +1,52 @@
+{% extends "AppBundle::layout.html.twig" %}
+{% block body %}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-3">
+				<div class="card">
+					<div class="tab-moivie tab-channel">
+						<a href="{{path("app_team_edit",{"id":team.id})}}" class="btn btn-tab-movie col-md-12"><i class="material-icons">edit</i> Edit</a>
+						<a href="{{path("app_team_staffs",{"id":team.id})}}" class="btn btn-tab-movie-active col-md-12"><i class="material-icons">people_outline</i> Articles</a>
+						<a href="{{path("app_team_index")}}" class="btn btn-tab-movie col-md-12"><i class="material-icons">arrow_back</i> Cancel</a>
+					</div>
+				</div>
+			</div>
+			<a href="{{path("app_staff_add",{"id":team.id})}}" rel="tooltip" data-placement="left" class=" btn btn-success btn-xs btn-round pull-right" data-original-title="Add {{team.title}}">
+				<i class="material-icons">add</i> Add Saff
+			</a>
+			<div class="col-md-9">
+				{% for staff in team.staffs %}
+					<div class="col-md-6" >
+						<div class="card card-product card-post"  >
+							<img class="img " style="height:auto;background-color:#fff;  border-top-left-radius: 5px;border-top-right-radius: 5px;" src="{{asset(staff.media.link)|imagine_filter("staff_thumb")}}">
+							<div class="card-content" style="padding: 10px 10px;">
+								<div class="post-title" >
+									<center>
+									{{staff.name}}
+									<p style="color:#555">({{staff.status}})</p>
+									</center>
+								</div>
+							</div>
+							<div class="card-footer">
+								<center>
+								<a href="{{path("app_staff_edit",{id:staff.id})}}" class="btn btn-xs btn-success btn-simple" rel="tooltip" data-placement="top" title="" data-original-title="Edit">
+									<i class="material-icons">edit</i>
+								</a>
+								<a href="{{path("app_staff_delete",{id:staff.id})}}" class="btn btn-xs btn-danger btn-simple" rel="tooltip" data-placement="top" title="" data-original-title="Delete">
+									<i class="material-icons">close</i>
+								</a>
+								<a href="{{path("app_staff_up",{id:staff.id})}}" class="btn btn-xs btn-info btn-round" rel="tooltip" data-placement="top" title="" data-original-title="Up">
+									<i class="material-icons">keyboard_arrow_up</i>
+								</a>
+								<a href="{{path("app_staff_down",{id:staff.id})}}" class="btn btn-xs btn-info btn-round" rel="tooltip" data-placement="top" title="" data-original-title="Down">
+									<i class="material-icons">keyboard_arrow_down</i>
+								</a>
+								</center>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+{% endblock%}

@@ -1,0 +1,196 @@
+{% extends "AppBundle::layout.html.twig" %}
+{% block body%}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-icon" data-background-color="rose">
+                        <i class="material-icons">list</i>
+                    </div>
+                    <div class="card-content">
+                        <a href="{{path("app_competition_tables",{"id":table.competition.id})}}" class="btn btn-primary pull-right" style="margin: 0px;"><span class="material-icons">arrow_back</span> BACK TO {{table.competition}}</a>
+                        <h4 class="card-title">{{table.competition}} / {{table.title}}</h4>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="rows">
+                            <br>
+                            {% if form_edit_row_view == null %}
+                                {{form_start(form)}}
+                                <table class="table table-hover table-bordered">
+                                    <tr>
+                                        <th width="50px">
+                                            
+                                        </th>
+                                        <th width="70px">
+                                            {{form_widget(form.prefix,{"attr":{"class":"form-control"}})}}
+                                        </th>
+                                        <th width="150px">
+                                            {{form_widget(form.label,{"attr":{"class":"form-control"}})}}
+                                        </th>
+                                        {% for i in 1..table.columns %}
+                                            <th>
+                                                {{form_widget(attribute(form, 'row'~ i ),{"attr":{"class":"form-control"}})}}
+                                            </th>
+                                        {% endfor %}
+                                        <th width="230px">
+                                            {{form_widget(form.save,{"attr":{"class":"btn btn-success","style":"margin-top: 0px; height: 36px; width: 100%;"}})}}
+                                        </th>
+                                    </tr>
+                                </table>
+                                <div style="display:none">
+                                    {% for i in table.columns..8 %}
+                                        {{form_widget(attribute(form, 'row'~ i ),{"attr":{"class":"form-control"}})}}
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <table class="table table-hover table-bordered">
+                                    <tr>
+                                        <th width="50px">
+                                            {{form.vars.value.color}}
+                                        </th>
+                                        <th width="70px">
+                                            {{form.vars.value.prefix}}
+                                        </th>
+                                        <th width="150px">
+                                            {{form.vars.value.label}}
+                                        </th>
+                                        {% for i in 1..table.columns %}
+                                            <th>
+                                                {{attribute(form.vars.value, 'row'~ i )}}
+                                            </th>
+                                        {% endfor %}
+                                        <td width="230px">
+                                            <a href="{{path("app_table_rows",{"id":table.id})}}" class="btn btn-danger" style="margin-top: 0px; height: 36px; width: 100%;">Cancel</a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            {% endif %}
+                            {% if form_edit_row_view == null %}
+                                {{form_end(form)}}
+                            {% endif %}
+                            {% if form_edit_row_view != null %}
+                                {{form_start(form_edit_row_view)}}
+                            {% endif %}
+                            <table class="table table-hover table-bordered">
+                                {% for row in table.lines %}
+                                    {% if row.type == "row" %}
+                                        {% if form_edit_row_view != null %}
+                                            {% if form_edit_row_view.vars.value.id == row.id %}
+                                                <tr>
+                                                    <th width="50px">
+                                                        {{form_widget(form_edit_row_view.color,{"attr":{"value":"#634FFF","class":"input-color jscolor","style":"    margin-bottom: 10px;height:40px"}})}}
+                                                    </th>
+                                                    <th width="70px">
+                                                        {{form_widget(form_edit_row_view.prefix,{"attr":{"class":"form-control"}})}}
+                                                    </th>
+                                                    <td width="150px">
+                                                        {{form_widget(form_edit_row_view.club,{"attr":{"class":"form-control"}})}}
+                                                    </td width="20%">
+                                                    {% for i in 1..table.columns %}
+                                                        <td>
+                                                            {{form_widget(attribute(form_edit_row_view, 'row'~ i ),{"attr":{"class":"form-control","placeholder":attribute(form.vars.value, 'row'~ i )}})}}
+                                                        </td>
+                                                    {% endfor %}
+                                                    <td width="230px">
+                                                        {{form_widget(form_edit_row_view.save,{"attr":{"class":"btn btn-success","style":"margin-top: 0px; height: 36px; width: 100%;"}})}}
+                                                    </td>
+                                                </tr>
+                                            {% else %}
+                                                <tr style="background-color:#{{ row.color }}50">
+                                                <td width="50px" >
+                                                        #
+                                                    </td >
+                                                    <td width="70px">
+                                                        {{ row.prefix }}
+                                                    </td >
+                                                    <td width="150px">
+                                                        {{ row.club }}
+                                                    </td>
+                                                    {% for i in 1..table.columns %}
+                                                        <td>
+                                                            {{attribute(row, 'row'~ i )}}
+                                                        </td>
+                                                    {% endfor %}
+                                                    <td width="230px">
+                                                        <a href="#" class="btn btn-infos btn-xs" style="margin-top: 0px;"><span class="material-icons">mode</span></a>
+                                                        <a href="#" class="btn btn-infos btn-xs" style="margin-top: 0px;"><span class="material-icons">delete</span></a>
+                                                        <a href="#" class="btn btn-infos btn-xs" style="margin-top: 0px;"><i class="material-icons">keyboard_arrow_up</i></a>
+                                                        <a href="#" class="btn btn-infos btn-xs" style="margin-top: 0px;"><i class="material-icons">keyboard_arrow_down</i></a>
+                                                    </td>
+                                                </tr>
+                                            {% endif %}
+                                        {% else %}
+                                            <tr style="background-color:#{{ row.color }}50">
+                                                <td width="50px" >
+                                                    #
+                                                </td >
+                                                <td width="70px">
+                                                    {{ row.prefix }}
+                                                </td >
+                                                <td width="150px">
+                                                    {{ row.club }}
+                                                </td>
+                                                {% for i in 1..table.columns %}
+                                                    <td>
+                                                        {{attribute(row, 'row'~ i )}}
+                                                    </td>
+                                                {% endfor %}
+                                                <td width="230px">
+                                                    <a href="{{path("app_table_rows",{"id":table.id,"row":row.id})}}" class="btn btn-primary btn-xs" style="margin-top: 0px;"><span class="material-icons">mode</span></a>
+                                                    <a href="{{path("app_line_delete",{"id":row.id})}}" class="btn btn-danger btn-xs" style="margin-top: 0px;"><span class="material-icons">delete</span></a>
+                                                    <a href="{{path("app_line_up",{"id":row.id})}}" class="btn btn-primary btn-xs" style="margin-top: 0px;"><i class="material-icons">keyboard_arrow_up</i></a>
+                                                    <a href="{{path("app_line_down",{"id":row.id})}}" class="btn btn-primary btn-xs" style="margin-top: 0px;"><i class="material-icons">keyboard_arrow_down</i></a>
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </table>
+                            {% if form_edit_row_view != null %}
+                                <div style="display:none">
+                                    {% for i in table.columns..8 %}
+                                        {{form_widget(attribute(form_edit_row_view, 'row'~ i ),{"attr":{"class":"form-control"}})}}
+                                    {% endfor %}
+                                </div>
+                                {{form_end(form_edit_row_view)}}
+                            {% endif %}
+                            {% if form_edit_row_view == null %}
+                                {{form_start(form_row)}}
+                                <table class="table table-hover table-bordered">
+                                    <tr>
+                                        <th width="50px">
+                                            {{form_widget(form_row.color,{"attr":{"value":"#634FFF","class":"input-color jscolor","style":"    margin-bottom: 10px;height:40px"}})}}
+                                        </th>
+                                        <td width="70px">
+                                            {{form_widget(form_row.prefix,{"attr":{"class":"form-control","placeholder":form.vars.value.prefix}})}}
+                                        </td>
+                                        <td width="150px">
+                                            {{form_widget(form_row.club,{"attr":{"class":"form-control"}})}}
+                                        </td>
+                                        {% for i in 1..table.columns %}
+                                            <td>
+                                                {{form_widget(attribute(form_row, 'row'~ i ),{"attr":{"class":"form-control","placeholder":attribute(form.vars.value, 'row'~ i )}})}}
+                                            </td>
+                                        {% endfor %}
+                                        <td width="230px">
+                                            {{form_widget(form_row.save,{"attr":{"class":"btn btn-success","style":"margin-top: 0px; height: 36px; width: 100%;"}})}}
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div style="display:none">
+                                    {% for i in table.columns..8 %}
+                                        {{form_widget(attribute(form_row, 'row'~ i ),{"attr":{"class":"form-control"}})}}
+                                    {% endfor %}
+                                </div>
+                                {{form_end(form_row)}}
+                            {% endif %}
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock%}

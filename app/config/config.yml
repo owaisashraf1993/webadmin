@@ -1,0 +1,143 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+    - { resource: "@AppBundle/Resources/config/services.yml" }
+    - { resource: "@UserBundle/Resources/config/services.yml" }
+
+stof_doctrine_extensions:
+    orm:
+        default:
+            sluggable: true
+
+parameters:
+    locale: en
+    files_directory: '%kernel.root_dir%/../public_html/uploads/'
+    files_directory_mp3: '%kernel.root_dir%/../public_html/files/'
+    files_directory_read: '/uploads/'
+    files_directory_read_mp3: '/files/'
+    token_app: "4F5A9C3D9A86FA54EACEDDD635185"
+
+framework:
+    session:
+        gc_probability: 0
+    translator: { fallbacks: [en] }
+    secret: '%secret%'
+    router:
+        resource: '%kernel.project_dir%/app/config/routing.yml'
+        strict_requirements: ~
+    form: ~
+    csrf_protection: ~
+    validation: { enable_annotations: true }
+    default_locale: '%locale%'
+    trusted_hosts: ~
+    session:
+        handler_id: session.handler.native_file
+        save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
+    fragments: ~
+    http_method_override: true
+    assets: ~
+    php_errors:
+        log: true
+    templating:
+        engines: ['twig','php']
+
+twig:
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: UserBundle\Entity\User
+    registration:
+        form:
+            type: UserBundle\Form\RegistrationType
+        confirmation:
+            enabled: false
+    from_email:
+        address: "testapp@testapp.com"
+        sender_name: "123456"
+
+# =========================
+# ✅ DOCTRINE (FIXED)
+# =========================
+doctrine:
+    dbal:
+        driver: pdo_mysql
+        host: '%database_host%'
+        port: '%database_port%'
+        dbname: '%database_name%'
+        user: '%database_user%'
+        password: '%database_password%'
+        charset: UTF8
+
+    orm:
+        auto_generate_proxy_classes: '%kernel.debug%'
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: false
+        mappings:
+            AppBundle:
+                is_bundle: true
+                type: annotation
+                dir: Entity
+                prefix: AppBundle\Entity
+            MediaBundle:
+                is_bundle: true
+                type: annotation
+                dir: Entity
+                prefix: MediaBundle\Entity
+            UserBundle:
+                is_bundle: true
+                type: annotation
+                dir: Entity
+                prefix: UserBundle\Entity
+
+sensio_framework_extra:
+    router:
+        annotations: false
+
+swiftmailer:
+    transport: '%mailer_transport%'
+    host: '%mailer_host%'
+    username: '%mailer_user%'
+    password: '%mailer_password%'
+    spool: { type: memory }
+
+liip_imagine:
+    resolvers:
+        default:
+            web_path:
+                web_root: '%kernel.root_dir%/../public_html/'
+                cache_prefix: uploads/cache
+    loaders:
+        default:
+            filesystem:
+                data_root: '%kernel.root_dir%/../public_html/'
+    filter_sets:
+        cache: ~
+
+hwi_oauth:
+    connect:
+        account_connector: my_user_provider
+    firewall_names: [main]
+    fosub:
+        username_iterations: 30
+        properties:
+            facebook: facebook_id
+            google: google_id
+    resource_owners:
+        facebook:
+            type: facebook
+            client_id: "2704597856444479"
+            client_secret: "b6c809f93ad07bdec6b21ba91e0bc92a"
+            scope: "email"
+            infos_url: "https://graph.facebook.com/me?fields=id,name,email,picture.type(large)"
+            paths:
+                email: email
+                profilepicture: picture.data.url
+        google:
+            type: google
+            client_id: "690266354741-vg742hddgqcp5qumkmc3lvhv0dla6e07.apps.googleusercontent.com"
+            client_secret: "m3a5C-q86wwReqOgbgd_NjJy"
+            scope: "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"

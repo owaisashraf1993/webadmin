@@ -1,0 +1,75 @@
+{% extends "AppBundle::layout.html.twig" %}
+{% block body%}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-icon" data-background-color="rose">
+                        <i class="material-icons">military_tech</i>
+                    </div>
+                    <div class="card-content">
+                        <a href="{{path("app_table_add",{"id":competition.id})}}" class="btn btn-success pull-right" style="margin: 0px;"><span class="material-icons">add</span> New Table</a>
+                        <h4 class="card-title">{{competition.name}} Raking tables</h4>
+                    </div>
+                </div>
+                {% for table in competition.tables %}
+                    <div class="card">
+                        <div class="card-header card-header-icon" data-background-color="rose">
+                            <i class="material-icons">list</i>
+                        </div>
+                        <div class="card-content">
+                            <div class="pull-right">
+                                <a href="{{path("app_table_edit",{"id":table.id})}}" class="btn btn-primary btn-sm" style="margin: 0px;"><span class="material-icons">mode</span></a>
+                                <a href="{{path("app_table_up",{"id":table.id})}}" class="btn btn-success btn-sm" style="margin: 0px;"><span class="material-icons">keyboard_arrow_up</span></a>
+                                <a href="{{path("app_table_down",{"id":table.id})}}" class="btn btn-success btn-sm" style="margin: 0px;"><span class="material-icons">keyboard_arrow_down</span></a>
+                                <a href="{{path("app_table_delete",{"id":table.id})}}" class="btn btn-danger btn-sm" style="margin: 0px;"><span class="material-icons">delete</span></a>
+                                <a href="{{path("app_table_rows",{"id":table.id})}}" class="btn btn-success btn-sm" style="margin: 0px;"><span class="material-icons">list</span></a>
+                            </div>
+                            <h4 class="card-title">{{table.competition}} / {{table.title}}</h4>
+                        </div>
+                        <hr>
+                        <div class="card-content">
+                            <div class="rows">
+                                <table class="table table-hover table-bordered">
+                                    {% for row in table.lines %}
+                                        {% if row.type == "header" %}
+                                            <tr>
+                                                <th width="100px">
+                                                    {{ row.prefix }}
+                                                </th >
+                                                <th width="150px">
+                                                    {{ row.label }}
+                                                </th>
+                                                {% for i in 1..table.columns %}
+                                                    <th>
+                                                        {{attribute(row, 'row'~ i )}}
+                                                    </th>
+                                                {% endfor %}
+                                            </tr>
+                                        {% else %}
+                                            <tr style="background-color:#{{ row.color }}40">
+                                                <td width="100px">
+                                                    {{ row.prefix }}
+                                                </td >
+                                                <td width="200px">
+                                                    <img   src="{{asset(row.club.media.link)|imagine_filter('club_thumb')}}"  style="height:20px; width:20px">
+                                                    {{ row.club }}
+                                                </td>
+                                                {% for i in 1..table.columns %}
+                                                    <td>
+                                                        {{attribute(row, 'row'~ i )}}
+                                                    </td>
+                                                {% endfor %}
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                </table>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock%}

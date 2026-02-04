@@ -1,0 +1,64 @@
+{% extends "AppBundle::layout.html.twig" %}
+{% block body%}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="row">
+					<div class="col-md-4">
+						<a href="{{path("app_action_index")}}" class="btn  btn-lg btn-warning btn-block"><i class="material-icons" style="font-size: 30px;">refresh</i> Refresh</a>
+					</div>
+					<div class="col-md-4">
+						<a class="btn btn btn-lg btn-yellow btn-block"><i class="material-icons" style="font-size: 30px;">fact_check</i> {{actions|length}} match events</a>
+					</div>
+					<div class="col-md-4">
+						<a href="{{path("app_action_add")}}" class="btn btn-success btn-lg pull-right add-button btn-block" title=""><i class="material-icons" style="font-size: 30px;">add</i> new action </a>
+					</div>
+				</div>
+				<div class="row">
+					{% for action in actions %}
+						<div class="col-md-4">
+							<div class="card">
+								<div class="row">
+									<div class="col-md-4">
+										<img src="{{asset(action.media.link)|imagine_filter('action_thumb')}}" style="wdith: 100%;padding:5px" >
+									</div>
+									<div class="col-md-8">
+										<br>
+										<h4>{{action.title}} </h4>
+									</div>
+									<div class="col-md-12" style="text-align:center">
+										<a href="{{path("app_action_edit",{"id":action.id})}}" rel="tooltip" data-placement="left" class=" btn btn-primary btn-xs btn-round" data-original-title="Edit">
+											<i class="material-icons">edit</i>
+										</a>
+										<a href="{{path("app_action_delete",{"id":action.id})}}" rel="tooltip" data-placement="left" class=" btn btn-danger btn-xs btn-round" data-original-title="Delete">
+											<i class="material-icons">delete</i>
+										</a>
+										<a href="{{path("app_action_up",{"id":action.id})}}" rel="tooltip" data-placement="left" class=" btn btn-info btn-xs btn-round" data-original-title="Up">
+											<i class="material-icons">keyboard_arrow_up</i>
+										</a>
+										<a href="{{path("app_action_down",{"id":action.id})}}" rel="tooltip" data-placement="left" class=" btn btn-info btn-xs btn-round" data-original-title="Down">
+											<i class="material-icons">keyboard_arrow_down</i>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					{% else %}
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-content">
+									<br>
+									<br>
+									<center><img src="{{asset("img/bg_empty.png")}}"  style="width: auto !important;" =""></center>
+									<br>
+									<br>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+				
+			</div>
+		</div>
+		
+	{% endblock%}

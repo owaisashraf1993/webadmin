@@ -1,0 +1,92 @@
+{% extends "AppBundle::layout.html.twig" %}
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="tab-moivie tab-channel">
+                        <a href="{{path("app_team_edit",{"id":team.id})}}" class="btn btn-tab-movie col-md-12"><i class="material-icons">edit</i> Edit</a>
+                        <a href="{{path("app_team_players",{"id":team.id})}}" class="btn btn-tab-movie-active col-md-12"><i class="material-icons">sports_handball</i> Players</a>
+                        <a href="{{path("app_team_index")}}" class="btn btn-tab-movie col-md-12"><i class="material-icons">arrow_back</i> Cancel</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="card" id="new_position_dialog" >
+                    {{form_start(position_form)}}
+
+                    <div class="card-content">
+                        <div class="form-group label-floating is-empty">
+                            <label class="control-label">Players positions</label>
+                            {{form_widget(position_form.title,{"attr":{"class":"form-control"}})}}
+                            <span class="validate-input">{{form_errors(position_form.title)}}</span>
+                        </div>
+                        <span class="pull-right">{{form_widget(position_form.save,{attr:{"class":"btn btn-fill btn-success"}})}}</span>
+                    </div>
+                    {{form_end(position_form)}}
+                </div>
+                {% for position in team.positions %}
+                    <div class="card">
+                        <div class="card-header card-header-icon" data-background-color="rose">
+                            <i class="material-icons">scatter_plot</i>
+                        </div>
+                        <div class="card-content">
+                            <h4 class="card-title" style=" display: inline-block; ">{{position.title}}</h4>
+                            <div class="pull-right" >
+                                <a href="{{path("app_position_edit",{"id":position.id})}}" rel="tooltip" data-placement="left" class=" btn btn-primary btn-xs btn-round pull-right" data-original-title="Edit">
+                                    <i class="material-icons">edit</i>
+                                </a>
+                                <a href="{{path("app_position_delete",{"id":position.id})}}" rel="tooltip" data-placement="left" class=" btn btn-danger btn-xs btn-round pull-right" data-original-title="Delete">
+                                    <i class="material-icons">delete</i>
+                                </a>
+                                <a href="{{path("app_position_up",{"id":position.id})}}" rel="tooltip" data-placement="left" class=" btn btn-info btn-xs btn-round pull-right" data-original-title="Up">
+                                    <i class="material-icons">keyboard_arrow_up</i>
+                                </a>
+                                <a href="{{path("app_position_down",{"id":position.id})}}" rel="tooltip" data-placement="left" class=" btn btn-info btn-xs btn-round pull-right" data-original-title="Down">
+                                    <i class="material-icons">keyboard_arrow_down</i>
+                                </a>
+                                <a href="{{path("app_player_add",{"id":position.id})}}" rel="tooltip" data-placement="left" class=" btn btn-success btn-xs btn-round pull-right" data-original-title="Add {{position.title}}">
+                                    <i class="material-icons">add</i> Add {{position.title}}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        {% for player in position.players %}
+                            <div class="col-lg-4 col-md-4 col-xs-6 col-sm-4" >
+                                <div class="card card-player" >
+                                    <div class="bg-player" style="background-image:url('https://upload.wikimedia.org/wikipedia/sco/thumb/4/47/FC_Barcelona_%28crest%29.svg/1200px-FC_Barcelona_%28crest%29.svg.png')"></div>
+                                    <div class="card-content">
+                                        <img class="img-country" src="{{asset(player.country.media.link)|imagine_filter('country_thumb_widget')}}">
+                                        <img class="img-player" src="{{asset(player.media.link)|imagine_filter('player_thumb')}}">
+                                        <p class="number-player">{{player.number}}</p>
+                                        <p class="fname-player">{{player.fname}}</p>
+                                        <p class="lname-player">{{player.lname}}</p>
+                                        <span></span>
+                                        <a href="{{path("app_player_transfer",{"id":player.id})}}" rel="tooltip" data-placement="left" class=" btn btn-success btn-xs btn-round" data-original-title="Transfer">
+                                            <i class="material-icons">compare_arrows</i>
+                                        </a>
+                                    </div>
+                                    <center class="card-footer">
+                                        <a href="{{path("app_player_edit",{"id":player.id})}}" rel="tooltip" data-placement="top" class=" btn btn-primary btn-xs btn-round" data-original-title="Edit">
+                                            <i class="material-icons">edit</i>
+                                        </a>
+                                        <a href="{{path("app_player_delete",{"id":player.id})}}" rel="tooltip" data-placement="top" class=" btn btn-danger btn-xs btn-round" data-original-title="Delete">
+                                            <i class="material-icons">delete</i>
+                                        </a>
+                                        <a href="{{path("app_player_up",{"id":player.id})}}" rel="tooltip" data-placement="top" class=" btn btn-info btn-xs btn-round" data-original-title="Up">
+                                            <i class="material-icons">keyboard_arrow_up</i>
+                                        </a>
+                                        <a href="{{path("app_player_down",{"id":player.id})}}" rel="tooltip" data-placement="top" class=" btn btn-info btn-xs btn-round" data-original-title="Down">
+                                            <i class="material-icons">keyboard_arrow_down</i>
+                                        </a>
+                                    </center>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock%}

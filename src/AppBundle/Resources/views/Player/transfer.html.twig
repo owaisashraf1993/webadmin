@@ -1,0 +1,69 @@
+{% extends "AppBundle::layout.html.twig" %}
+{% block body%}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-xs-6 col-sm-4" >
+                <div class="card card-player" >
+                    <div class="bg-player" style="background-image:url('https://upload.wikimedia.org/wikipedia/sco/thumb/4/47/FC_Barcelona_%28crest%29.svg/1200px-FC_Barcelona_%28crest%29.svg.png')"></div>
+                    <div class="card-content">
+                        <img class="img-country" src="{{asset(player.country.media.link)|imagine_filter('country_thumb_widget')}}">
+                        <img class="img-player" src="{{asset(player.media.link)|imagine_filter('player_thumb')}}">
+                        <p class="number-player">{{player.number}}</p>
+                        <p class="fname-player">{{player.fname}}</p>
+                        <p class="lname-player">{{player.lname}}</p>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="card" style="margin-top: 0px;">
+                    <div class="card-header card-header-icon" data-background-color="rose">
+                        <i class="material-icons">compare_arrows</i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">Transfer player</h4>
+                        <br>
+                        <div class="col-md-6">
+                            <div class="panel-body" style=" padding-bottom: 0; margin-bottom: 10px; ">
+                                <label class="panel-title">From</label>
+                                    <div class="form-group label-floating is-empty">
+                                        <label class="control-label">Current Team</label>
+                                        <input type="text" readonly="true" class="form-control" value="{{player.post.team}}">
+                                    </div>
+                                    <div class="form-group label-floating is-empty">
+                                        <label class="control-label">Current Player Position</label>
+                                        <input type="text" readonly="true" class="form-control" value="{{player.post}}">
+                                    </div>
+                                    <span ><a href="{{path("app_team_players",{id:player.post.team.id})}}" class="btn btn-fill  btn-sm btn-yellow"><i class="material-icons">arrow_back</i> Cancel</a></span>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="panel-body" style=" padding-bottom: 0; margin-bottom: 10px; ">
+                                <label class="panel-title">To</label>
+                                <form method="GET">
+                                    <div class="form-group label-floating is-empty">
+                                        <label class="control-label">New Team</label>
+                                        <select onchange="this.form.submit()" name="selected_team_id" class="form-control">
+                                            {% for team in teams %}
+                                                <option {% if selected_team_id == team.id %}selected{% endif %} value="{{team.id}}">{{team}}</option>
+                                            {% endfor %}
+                                        </select>  
+                                    </div>
+                                </form>
+                                {{form_start(form)}}
+                                    <div class="form-group label-floating is-empty">
+                                        <label class="control-label">New Player Position</label>
+                                         {{form_widget(form.mypost,{"attr":{"class":"form-control"}})}}
+                                    </div>
+                                    <span class="validate-input">{{form_errors(form.mypost)}}</span>
+                                    <span class="pull-right">{{form_widget(form.send,{attr:{"class":"btn btn-sm btn-fill btn-success"}})}}</span>
+                                {{form_end(form)}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock%}

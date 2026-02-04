@@ -1,0 +1,130 @@
+{% extends "AppBundle::layout.html.twig" %}
+{% block body%}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="tab-moivie tab-channel">
+                        <a href="{{path("app_home_settings")}}" class="btn btn-tab-movie-active col-md-12"><i class="material-icons">phonelink_setup</i> General Settings</a>
+                        <a href="{{path("app_home_notifications")}}" class="btn btn-tab-movie col-md-12"><i class="material-icons">notifications</i> Notifications Settings</a>
+                        <a href="{{path("app_home_ads")}}" class="btn btn-tab-movie col-md-12"><i class="material-icons">show_chart</i> Android Ads Settings</a>
+                        <a href="{{path("app_home_ios_ads")}}" class="btn btn-tab-movie col-md-12"><i class="material-icons">show_chart</i> iOS Ads Settings</a>                        <a href="{{path("app_home_edit_privacypolicy")}}" class="btn btn-tab-movie col-md-12"><i class="material-icons">privacy_tip</i> Privacy Policy</a>
+                        <a href="{{path("admin_change_password")}}" class="btn btn-tab-movie col-md-12"><i class="material-icons">lock</i> Change password</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header card-header-icon" data-background-color="rose">
+                        <i class="material-icons">settings</i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">General Settings</h4>
+                        {{form_start(form)}}
+                        <br>
+                        <div class="form-group label-floating">
+                            <label class="control-label">Admin Name : </label>
+                            {{form_widget(form.adminname,{"attr":{"class":"form-control"}})}}
+                            <span class="validate-input">{{form_errors(form.adminname)}}</span>
+                        </div>
+                        <div class="form-group label-floating">
+                            <label class="control-label">App Name : </label>
+                            {{form_widget(form.appname,{"attr":{"class":"form-control"}})}}
+                            <span class="validate-input">{{form_errors(form.appname)}}</span>
+                        </div>
+                        <div class="form-group label-floating">
+                            <label class="control-label">App Sub- Name : </label>
+                            {{form_widget(form.appsubname,{"attr":{"class":"form-control"}})}}
+                            <span class="validate-input">{{form_errors(form.appsubname)}}</span>
+                        </div>
+                        <div class="form-group label-floating">
+                            <label class="control-label">App Description : </label>
+                            {{form_widget(form.appdescription,{"attr":{"class":"form-control"}})}}
+                            <span class="validate-input">{{form_errors(form.appdescription)}}</span>
+                        </div>
+                        <div class="form-group label-floating">
+                            <label class="control-label">Google Play url : </label>
+                            {{form_widget(form.googleplay,{"attr":{"class":"form-control"}})}}
+                            <span class="validate-input">{{form_errors(form.googleplay)}}</span>
+                        </div>
+                        <div class="form-group label-floating">
+                            <label class="control-label">AppStore url : </label>
+                            {{form_widget(form.appstore,{"attr":{"class":"form-control"}})}}
+                            <span class="validate-input">{{form_errors(form.appstore)}}</span>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel-body">
+                                    <label class="panel-title">Club Sponsors image</label>
+                                    <span class="validate-input">{{form_errors(form.filelogo)}}</span>
+                                    <div class="fileinput fileinput-new text-center" style="    width: 100%;" data-provides="fileinput">
+                                        <div class="fileinput-new thumbnail" style="    width: 100%;">
+                                            {% if form.vars.value.sponsors != null %}
+                                                <img  id="img-preview" src="{{asset(form.vars.value.sponsors.link)}}"  width="100%">
+                                            {% else %}
+                                                <img  id="img-preview" src="{{asset("img/image_placeholder.jpg")|imagine_filter('app_logo')}}"  width="100%">
+                                            {% endif %}
+                                            <a href="#" class="btn btn-rose btn-round btn-select"><i class="material-icons">image</i> Select Sponsors Image </a>
+                                        </div>
+                                        {{form_widget(form.filesponsors,{"attr":{"class":"file-hidden input-file img-selector","style":"    display: none;"}})}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="panel-body">
+                                    <label class="panel-title">Club logo</label>
+                                    <div class="fileinput fileinput-new text-center" style="    width: 100%;" data-provides="fileinput">
+                                        <div class="fileinput-new thumbnail" style="    width: 100%;">
+                                            {% if form.vars.value.logo != null %}
+                                                <img  id="img-preview-1" src="{{asset(form.vars.value.logo.link)}}"  width="100%">
+                                            {% else %}
+                                                <img  id="img-preview-1" src="{{asset("img/image_placeholder.jpg")|imagine_filter('app_sponsors')}}"  width="100%">
+                                            {% endif %}
+                                            <a href="#" class="btn btn-rose btn-round btn-select-1"><i class="material-icons">image</i> Select Logo </a>
+                                        </div>
+                                        {{form_widget(form.filelogo,{"attr":{"class":"file-hidden input-file-1 img-selector-1","style":"    display: none;"}})}}
+                                    </div>
+                                </div>
+                                 <div class="panel-body">
+                                    <label class="panel-title">Admin Profile pictutre</label>
+                                    <div class="fileinput fileinput-new text-center" style="    width: 100%;" data-provides="fileinput">
+                                        <div class="fileinput-new thumbnail" style="    width: 100%;">
+                                            {% if admin.media != null %}
+                                                <img  id="img-preview-3" src="{{asset(admin.media.link)}}"  width="100%">
+                                            {% else %}
+                                                <img  id="img-preview-3" src="{{asset("img/image_placeholder.jpg")|imagine_filter('app_star')}}"  width="100%">
+                                            {% endif %}
+                                            <a href="#" class="btn btn-rose btn-round btn-select-3"><i class="material-icons">image</i> Select Profile pictutre </a>
+                                        </div>
+                                        {{form_widget(form.fileadmin,{"attr":{"class":"file-hidden input-file-3 img-selector-3","style":"    display: none;"}})}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="panel-body">
+                                    <label class="panel-title">Club Star image</label>
+                                    <div class="fileinput fileinput-new text-center" style="    width: 100%;" data-provides="fileinput">
+                                        <div class="fileinput-new thumbnail" style="    width: 100%;">
+                                            {% if form.vars.value.star != null %}
+                                                <img  id="img-preview-2" src="{{asset(form.vars.value.star.link)}}"  width="100%">
+                                            {% else %}
+                                                <img  id="img-preview-2" src="{{asset("img/image_placeholder.jpg")|imagine_filter('app_star')}}"  width="100%">
+                                            {% endif %}
+                                            <a href="#" class="btn btn-rose btn-round btn-select-2"><i class="material-icons">image</i> Select Player Star </a>
+                                        </div>
+                                        {{form_widget(form.filestar,{"attr":{"class":"file-hidden input-file-2 img-selector-2","style":"    display: none;"}})}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="validate-input">{{form_errors(form.filesponsors)}}</span>
+                    </div>
+                    <span class="pull-right">{{form_widget(form.save,{attr:{"class":"btn btn-fill btn-rose"}})}}</span>
+                </div>
+                {{form_end(form)}}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock%}
